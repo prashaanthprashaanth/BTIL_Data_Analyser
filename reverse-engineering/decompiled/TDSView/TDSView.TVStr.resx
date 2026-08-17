@@ -1,0 +1,369 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+<resheader name="resmimetype"><value>text/microsoft-resx</value></resheader><resheader name="version"><value>1.3</value></resheader><resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader><resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader><data name="SuppressVersionConflict" xml:space="preserve"><value>Suppress warning about "Version mismatch"</value></data>
+  <data name="evDgvCount" xml:space="preserve"><value>Cnt</value></data>
+  <data name="evDgvSignalName" xml:space="preserve"><value>Event Name</value></data>
+  <data name="evDgvSpeed" xml:space="preserve"><value>Speed</value></data>
+  <data name="evDgvLimit" xml:space="preserve"><value>Limit</value></data>
+  <data name="Information" xml:space="preserve"><value>Information</value></data>
+  <data name="evDgvRefNr" xml:space="preserve"><value>Ref Nr</value></data>
+  <data name="evDgvUser2" xml:space="preserve"><value>User2</value></data>
+  <data name="evDgvUser3" xml:space="preserve"><value>User3</value></data>
+  <data name="evDgvUser1" xml:space="preserve"><value>User1</value></data>
+  <data name="evDgvUser4" xml:space="preserve"><value>User4</value></data>
+  <data name="evDgvUser5" xml:space="preserve"><value>User5</value></data>
+  <data name="evDgvOdometer" xml:space="preserve"><value>Odometer</value></data>
+  <data name="evDgvStartTime" xml:space="preserve"><value>Start time</value></data>
+  <data name="FitToPageWidth" xml:space="preserve"><value>Fit to page width</value></data>
+  <data name="KeepSelAndFind" xml:space="preserve"><value>Keep Sel 'n Find</value></data>
+  <data name="configurationsToolStripMenuItem_Text" xml:space="preserve"><value>Settings</value></data>
+  <data name="tsmnui_User3_Text" xml:space="preserve"><value>User 3</value></data>
+  <data name="FilterRemoveAll" xml:space="preserve"><value>Remove all Filters</value></data>
+  <data name="AboutDescription" xml:space="preserve"><value>This tool allows to show uploaded TDS events and analyze them.
+It's a freeware. The author does not take over the responsability in case of damages, caused by this tool.</value></data>
+  <data name="SrcOfPositionData" xml:space="preserve"><value>Source of Position Data</value></data>
+  <data name="tsmnui_User2_Text" xml:space="preserve"><value>User 2</value></data>
+  <data name="DeselectAll" xml:space="preserve"><value>Deselect all</value></data>
+  <data name="openEDVForRawDataViewToolStripMenuItem_Text" xml:space="preserve"><value>Open ED_V For Raw Data View</value></data>
+  <data name="evDgvECode3Desc" xml:space="preserve"><value>ECode 3 Descr</value></data>
+  <data name="evDgvECode0Desc" xml:space="preserve"><value>ECode 0 Descr</value></data>
+  <data name="ECode0" xml:space="preserve"><value>ECode 0</value></data>
+  <data name="evDgvECode2Desc" xml:space="preserve"><value>ECode 2 Descr</value></data>
+  <data name="evDgvECode1Desc" xml:space="preserve"><value>ECode 1 Descr</value></data>
+  <data name="PrintOptions" xml:space="preserve"><value>Print Options</value></data>
+  <data name="ReallyWantToReset" xml:space="preserve"><value>Do you really want to reset the settings?</value></data>
+  <data name="evDgvEnvBlockId" xml:space="preserve"><value>EnvBl Id</value></data>
+  <data name="ColSortDescending" xml:space="preserve"><value>Descending</value></data>
+  <data name="tsbtn_Find_ToolTipText" xml:space="preserve"><value>Find Text (Ctrl+F)</value></data>
+  <data name="InvalidEdvFile" xml:space="preserve"><value>Invalid ED_V file</value></data>
+  <data name="Accept" xml:space="preserve"><value>Accept</value></data>
+  <data name="OTIVersion" xml:space="preserve"><value>OTI Version</value></data>
+  <data name="Filter" xml:space="preserve"><value>Filter</value></data>
+  <data name="tsmnui_User1_Text" xml:space="preserve"><value>User 1</value></data>
+  <data name="evDgvVehicleName" xml:space="preserve"><value>Vehicle Name</value></data>
+  <data name="FatalError" xml:space="preserve"><value>Fatal Error</value></data>
+  <data name="ClearRecentList" xml:space="preserve"><value>...Clear Recent List</value></data>
+  <data name="tsmnui_User5_Text" xml:space="preserve"><value>User 5</value></data>
+  <data name="tsmnui_Exit_Text" xml:space="preserve"><value>E&amp;xit</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Cancel</value></data>
+  <data name="tsmnui_User4_Text" xml:space="preserve"><value>User 4</value></data>
+  <data name="TimeWithMilliSec" xml:space="preserve"><value>Start/Stop Time with Milliseconds</value></data>
+  <data name="evDgvProcessId" xml:space="preserve"><value>Prc Id</value></data>
+  <data name="open_ED_D_FileDialog_Title" xml:space="preserve"><value>Select Event Description File  ED_D_xxx.OTI</value></data>
+  <data name="tsmnui_getSettings_Text" xml:space="preserve"><value>Load</value></data>
+  <data name="StartSTSNT" xml:space="preserve"><value>/N01 done.
+Start Roland Brüggers only-true STSNT program and enjoy the result
+Do you want to start STSNT?</value></data>
+  <data name="MultipleEventFilesOpen" xml:space="preserve"><value>TDSView [Multiple event files open]</value></data>
+  <data name="SelectedRows" xml:space="preserve"><value>Selected</value></data>
+  <data name="AllSignals" xml:space="preserve"><value>$ALL$ : All events will be exported (without environment data)</value></data>
+  <data name="OpenEventFilePackage" xml:space="preserve"><value>Open event file package</value></data>
+  <data name="tsmnui_ExportToEXCEL_Text" xml:space="preserve"><value>Export to EXCE&amp;L</value></data>
+  <data name="tsmnui_Recent_Text" xml:space="preserve"><value>Recent Files</value></data>
+  <data name="tsmnui_HelpContent_Text" xml:space="preserve"><value>&amp;Content</value></data>
+  <data name="LongLo" xml:space="preserve"><value>Longitude low word</value></data>
+  <data name="LongHi" xml:space="preserve"><value>Longitude high word</value></data>
+  <data name="Update" xml:space="preserve"><value>Updates</value></data>
+  <data name="tsmnui_RemoveUserColumn_ToolTipText" xml:space="preserve"><value>Remove a selected User Column</value></data>
+  <data name="MultipleLinesSelected" xml:space="preserve"><value>Multiple Lines Selected</value></data>
+  <data name="FilterApplyFilter" xml:space="preserve"><value>Apply Filter</value></data>
+  <data name="InvalidOTIVariableFile" xml:space="preserve"><value>Invalid OTI variable file </value></data>
+  <data name="tsmnui_Help_Text" xml:space="preserve"><value>&amp;Help</value></data>
+  <data name="TimeZone" xml:space="preserve"><value>Define Time Zone (Default = 0h)</value></data>
+  <data name="NoEnvSigGap" xml:space="preserve"><value>STSNT output: Keep environment values between events</value></data>
+  <data name="tsmnui_AddToEventColumn_Text" xml:space="preserve"><value>Add to Event Column</value></data>
+  <data name="BrowseTo" xml:space="preserve"><value>&gt;&gt;</value></data>
+  <data name="CreationOfSTSNTFiles" xml:space="preserve"><value>Creation of STSNT files</value></data>
+  <data name="evDgvTrip" xml:space="preserve"><value>Trip</value></data>
+  <data name="tsmnui_Print_Text" xml:space="preserve"><value>&amp;Print</value></data>
+  <data name="Read_Out_Time" xml:space="preserve"><value>Read out time</value></data>
+  <data name="FileIndex" xml:space="preserve"><value>File Index</value></data>
+  <data name="NoValidGPSPosition" xml:space="preserve"><value>No valid GPS postion available or no event selected</value></data>
+  <data name="evDgvAltitude" xml:space="preserve"><value>Altitude</value></data>
+  <data name="ChangeLanguageTimeZone" xml:space="preserve"><value>Changed language / time zone</value></data>
+  <data name="EnvGridShowDescrCol" xml:space="preserve"><value>Show Description Column</value></data>
+  <data name="NoEventsMatchesToSetting" xml:space="preserve"><value>No events matches to the setting</value></data>
+  <data name="RowsToPrint" xml:space="preserve"><value>Rows to print</value></data>
+  <data name="TextFileExportTo" xml:space="preserve"><value>Text file exported to</value></data>
+  <data name="TSVFileExportTo" xml:space="preserve"><value>TSV file export to</value></data>
+  <data name="SaveConfiguration" xml:space="preserve"><value>Save Settings</value></data>
+  <data name="tsmnui_AllPrePostEnvironmentVariables_Text" xml:space="preserve"><value>All &amp;Pre-/Post Environment Variables</value></data>
+  <data name="ResizeColumns" xml:space="preserve"><value>Resize Columns</value></data>
+  <data name="tsmnui_SavePackage_Text" xml:space="preserve"><value>&amp;Save Package</value></data>
+  <data name="MakesNoSense" xml:space="preserve"><value>Makes no sense</value></data>
+  <data name="OT_TT_ReloadDir" xml:space="preserve"><value>Reload the tree/list \nbelow the selected directory</value></data>
+  <data name="tsbtn_FindNext_ToolTipText" xml:space="preserve"><value>Find Next (F3)</value></data>
+  <data name="EnvVariableName_HeaderText" xml:space="preserve"><value>Variable Name</value></data>
+  <data name="Repair" xml:space="preserve"><value>REPAIR</value></data>
+  <data name="ExportToText" xml:space="preserve"><value>Export to Text</value></data>
+  <data name="SelectionExportToExcel" xml:space="preserve"><value>Do you want to export the selected rows only?</value></data>
+  <data name="TakeFromEventAttr" xml:space="preserve"><value>Take Position from Event Attribute</value></data>
+  <data name="UseLocalTime" xml:space="preserve"><value>Use PC Time Zone Setting</value></data>
+  <data name="tsmnui_Ranking_Text" xml:space="preserve"><value>Ranking List</value></data>
+  <data name="Search" xml:space="preserve"><value>Search</value></data>
+  <data name="AllFiles" xml:space="preserve"><value>All Files</value></data>
+  <data name="NumberOfEvents" xml:space="preserve"><value>Number of events</value></data>
+  <data name="evDgvDuration" xml:space="preserve"><value>Duration</value></data>
+  <data name="OpenSelection" xml:space="preserve"><value>Open Selection</value></data>
+  <data name="openFileDialogRawView_Filter" xml:space="preserve"><value>OTI files (ED_V*.*)|ED_V*.*|All files (*.*)|*.*</value></data>
+  <data name="tsmnui_ShowPathInGoogleEarth_Text" xml:space="preserve"><value>&amp;Show Path in Google Earth</value></data>
+  <data name="Project" xml:space="preserve"><value>Project:</value></data>
+  <data name="TDSViewPackageFiles" xml:space="preserve"><value>TDSView Package Files</value></data>
+  <data name="NoMoreOccurences" xml:space="preserve"><value>No more occurences of search string
+So you can do something else</value></data>
+  <data name="ErrorCodeAsHex" xml:space="preserve"><value>Display ErrorCode as Hexadecimal Number</value></data>
+  <data name="StopLTStartTime" xml:space="preserve"><value>Selected stop time is earlier than selected start time</value></data>
+  <data name="ShowNegativeTimeWarning" xml:space="preserve"><value>Show negative time warning</value></data>
+  <data name="tsmnui_ShowMap1_Text" xml:space="preserve"><value>Show Map</value></data>
+  <data name="ExportToCSV" xml:space="preserve"><value>Export to TSV</value></data>
+  <data name="ProjectName" xml:space="preserve"><value>Project Name</value></data>
+  <data name="EXCEL_toolStripButton_ToolTipText" xml:space="preserve"><value>Export to EXCEL</value></data>
+  <data name="Content" xml:space="preserve"><value>Content</value></data>
+  <data name="InvalidPath" xml:space="preserve"><value>Invalid path</value></data>
+  <data name="evDgvDistText" xml:space="preserve"><value>Dist Text</value></data>
+  <data name="StartTime" xml:space="preserve"><value>Start Time</value></data>
+  <data name="evDgvSubsystem" xml:space="preserve"><value>Subsys</value></data>
+  <data name="tsmnui_OpenEDVFile_Text" xml:space="preserve"><value>&amp;Open ED_V File</value></data>
+  <data name="ED_V_Path" xml:space="preserve"><value>ED_V Path</value></data>
+  <data name="EventRelatedText" xml:space="preserve"><value>Event related text</value></data>
+  <data name="tsmnui_ExportToTSV_Text" xml:space="preserve"><value>Export to TSV</value></data>
+  <data name="CoordMRVC" xml:space="preserve"><value>Coordinates acc. MRVC specification</value></data>
+  <data name="RankingList" xml:space="preserve"><value>Ranking List</value></data>
+  <data name="OT_TT_DeselectAllCb" xml:space="preserve"><value>Deselect all check boxes</value></data>
+  <data name="CouldNotCreateSpecOutFile" xml:space="preserve"><value>Could not create specified output file</value></data>
+  <data name="SettingsBackToDefault" xml:space="preserve"><value>Settings will be set back to default values</value></data>
+  <data name="openFileDialog_ED_V_Filter" xml:space="preserve"><value>OTI files (ED_V*.*)|ED_V*.*|All files (*.*)|*.*</value></data>
+  <data name="MissingOTISearchManual" xml:space="preserve"><value>...or search manually</value></data>
+  <data name="ActivateLangOrTimeZone" xml:space="preserve"><value>To activate the new selected language or time zone usage,
+you have to reopen the ED_V-file(s)</value></data>
+  <data name="evDgvPriority" xml:space="preserve"><value>Prio</value></data>
+  <data name="NbrFoundEDVFiles" xml:space="preserve"><value>Nbr of found ED_V files: </value></data>
+  <data name="NoRepairText" xml:space="preserve"><value>No repair text available</value></data>
+  <data name="NoEvents" xml:space="preserve"><value>This file contains no events
+Select an other one</value></data>
+  <data name="AlternateRowColor" xml:space="preserve"><value>Alternate Row Color</value></data>
+  <data name="tsbtn_Print_ToolTipText" xml:space="preserve"><value>Print Event List (Ctrl+P)</value></data>
+  <data name="evDgvUniqueRef" xml:space="preserve"><value>UniqueRef</value></data>
+  <data name="CntToolTip" xml:space="preserve"><value>Number of triggered Events</value></data>
+  <data name="hideDescriptionColumnToolStripMenuItem_Text" xml:space="preserve"><value>Hide Description Column</value></data>
+  <data name="VersionMisMatch" xml:space="preserve"><value>The version of ED_V- and ED_D-File is not the same
+Continue?</value></data>
+  <data name="OT_TT_OpenDirDialog" xml:space="preserve"><value>Opens a directory selection dialog \nto define the root directory</value></data>
+  <data name="evDgvErrorCode2" xml:space="preserve"><value>ECode 2</value></data>
+  <data name="evDgvErrorCode3" xml:space="preserve"><value>ECode 3</value></data>
+  <data name="evDgvErrorCode0" xml:space="preserve"><value>ECode 0</value></data>
+  <data name="evDgvErrorCode1" xml:space="preserve"><value>ECode 1</value></data>
+  <data name="NoRepairTextAvailable" xml:space="preserve"><value>No repair or other text available for this event</value></data>
+  <data name="StringNotFound" xml:space="preserve"><value>Could not find search string
+Try with an other one</value></data>
+  <data name="TreeView" xml:space="preserve"><value>Tree view</value></data>
+  <data name="SelectedFileIsAlreadyRead" xml:space="preserve"><value>Selected file is already read</value></data>
+  <data name="SaveOpenedEventFilesAsPackage" xml:space="preserve"><value>Save opened event files as package</value></data>
+  <data name="PredefinedLanguage" xml:space="preserve"><value>Predefined Language</value></data>
+  <data name="GenerateTextFileOnError" xml:space="preserve"><value>Generate text file (File / Export to Text) and search in the created text file for environment variables with value "????" (4 question marks!).
+The related DDS contains other environment data as defined in the project specific TDS definition.</value></data>
+  <data name="EndTime" xml:space="preserve"><value>End Time</value></data>
+  <data name="InvalidOTIDescr" xml:space="preserve"><value>Invalid OTI description file</value></data>
+  <data name="OK" xml:space="preserve"><value>&amp;OK</value></data>
+  <data name="tsmnui_AddEDVFile_Text" xml:space="preserve"><value>&amp;Add ED_V File</value></data>
+  <data name="evDgvSubsysDesc" xml:space="preserve"><value>Subsys Desc</value></data>
+  <data name="CouldNotFind" xml:space="preserve"><value>Could not find</value></data>
+  <data name="ColumnsToPrint" xml:space="preserve"><value>Columns to print</value></data>
+  <data name="NotAvailable" xml:space="preserve"><value>not available</value></data>
+  <data name="TotalNbrOfEvents" xml:space="preserve"><value>Total number of events:</value></data>
+  <data name="ExcelFiles" xml:space="preserve"><value>Excel files</value></data>
+  <data name="EnvGridHideDescrCol" xml:space="preserve"><value>Hide Description Column</value></data>
+  <data name="tsmnui_Tools_Text" xml:space="preserve"><value>&amp;Tools</value></data>
+  <data name="saveConfigurationDialog_Filter" xml:space="preserve"><value>TDSView Setting Files (*.TVS)|*.TVS|All files (*.*)|*.*</value></data>
+  <data name="TimeShift" xml:space="preserve"><value>Time shift</value></data>
+  <data name="OT_TT_Close" xml:space="preserve"><value>Close the Dialog</value></data>
+  <data name="Cnt" xml:space="preserve"><value>Cnt</value></data>
+  <data name="FilterDeselectAll" xml:space="preserve"><value>Deselect all</value></data>
+  <data name="Error" xml:space="preserve"><value>Error</value></data>
+  <data name="About" xml:space="preserve"><value>About</value></data>
+  <data name="Close" xml:space="preserve"><value>Close</value></data>
+  <data name="LatLo" xml:space="preserve"><value>Latitude low word</value></data>
+  <data name="LatHi" xml:space="preserve"><value>Latitude high word</value></data>
+  <data name="TakeOverSelection" xml:space="preserve"><value>Take Times from selected Events</value></data>
+  <data name="PrcId" xml:space="preserve"><value>Prc Id</value></data>
+  <data name="tsbtn_GeneralInfo_ToolTipText" xml:space="preserve"><value>General Information</value></data>
+  <data name="MissingOTIAvlLanguages" xml:space="preserve"><value>but the following languages are available:</value></data>
+  <data name="tsmnui_RemoveUserColumn_Text" xml:space="preserve"><value>Remove User Column</value></data>
+  <data name="SelectAll" xml:space="preserve"><value>Select all</value></data>
+  <data name="Open_ED_V_Overview" xml:space="preserve"><value>Open ED_V Overview</value></data>
+  <data name="EventId" xml:space="preserve"><value>Event Id</value></data>
+  <data name="evDgvVehiclePos" xml:space="preserve"><value>Vh Pos</value></data>
+  <data name="HelpSTSNTSelectStartTime" xml:space="preserve"><value>Select a start time of the existing events.
+This will be the earliest time in the STSNT data file</value></data>
+  <data name="ShowMissingEDT" xml:space="preserve"><value>Show "Missing ED_T" warning</value></data>
+  <data name="CoordRDS" xml:space="preserve"><value>Coordinates acc. RDS specification</value></data>
+  <data name="FileInPackageUnknown" xml:space="preserve"><value>File in package is unknown:</value></data>
+  <data name="CheckPath" xml:space="preserve"><value>Check path and enter valid directory</value></data>
+  <data name="tsmnui_ExportToSTSNT_Text" xml:space="preserve"><value>Export to STS&amp;NT</value></data>
+  <data name="openInTreeToolStripMenuItem_Text" xml:space="preserve"><value>Open ED_V Overview</value></data>
+  <data name="Open_ED_VFile" xml:space="preserve"><value>Open ED_V file</value></data>
+  <data name="SearchInEventDescription" xml:space="preserve"><value>Search in event description</value></data>
+  <data name="AskDeveloper" xml:space="preserve"><value>Ask the developer what's to do</value></data>
+  <data name="SignalName" xml:space="preserve"><value>Signal Name</value></data>
+  <data name="tsmnui_View_Text" xml:space="preserve"><value>&amp;View</value></data>
+  <data name="open_ED_D_FileDialog_Filter" xml:space="preserve"><value>OTI files (ED_D*.OTI)|ED_D*.OTI|All files (*.*)|*.*</value></data>
+  <data name="tsmnui_ShowMap_Text" xml:space="preserve"><value>Show &amp;Map (Selected Event)</value></data>
+  <data name="OT_TT_OpenSelEDV" xml:space="preserve"><value>Opens the selected ED_V files</value></data>
+  <data name="TitleOfPrint" xml:space="preserve"><value>Title of print</value></data>
+  <data name="GetConfiguration" xml:space="preserve"><value>Load Settings</value></data>
+  <data name="RepairTextNotShown" xml:space="preserve"><value>Repair texts will not be shown.
+Take a screwdriver and repair the problem by your own experience!</value></data>
+  <data name="GeneralFileInformation" xml:space="preserve"><value>General File Information</value></data>
+  <data name="NotFoundOTI" xml:space="preserve"><value>Not found OTI description file</value></data>
+  <data name="AllRows" xml:space="preserve"><value>All</value></data>
+  <data name="ReadOutTime" xml:space="preserve"><value>Read out time</value></data>
+  <data name="OptTabPage2" xml:space="preserve"><value>General Settings</value></data>
+  <data name="OptTabPage3" xml:space="preserve"><value>Path Definitions</value></data>
+  <data name="OptTabPage1" xml:space="preserve"><value>Columns</value></data>
+  <data name="OptTabPage6" xml:space="preserve"><value>Tool Language</value></data>
+  <data name="OptTabPage4" xml:space="preserve"><value>Map</value></data>
+  <data name="OptTabPage5" xml:space="preserve"><value>TSV Filter</value></data>
+  <data name="FilterRemoveQuestion" xml:space="preserve"><value>Do you really want to remove all filters?</value></data>
+  <data name="tsmnui_GeneralFileInformation_Text" xml:space="preserve"><value>&amp;General File Information</value></data>
+  <data name="tsmnui_OpenPackage_Text" xml:space="preserve"><value>Open Pac&amp;kage</value></data>
+  <data name="SelectAnOtherOne" xml:space="preserve"><value>Select an other one that makes more fun</value></data>
+  <data name="UnknownColumnId" xml:space="preserve"><value>Unknown column id</value></data>
+  <data name="tsmnui_Options_Text" xml:space="preserve"><value>&amp;Options</value></data>
+  <data name="tsmnui_ShowEnvironmentInSTSNT_ToolTipText" xml:space="preserve"><value>Show Environment Variables of the selected event in STSNT</value></data>
+  <data name="Version" xml:space="preserve"><value>Version:</value></data>
+  <data name="Vehicle" xml:space="preserve"><value>Vehicle:</value></data>
+  <data name="evDgvHeading" xml:space="preserve"><value>Heading</value></data>
+  <data name="TDSViewPositionTracker" xml:space="preserve"><value>Event Position</value></data>
+  <data name="OptTextBox4" xml:space="preserve"><value>The order to save the output files is as follows:
+1. Directory defined here
+2. Same directory as  selected ED_V_xxx.yyyy</value></data>
+  <data name="OptTextBox2" xml:space="preserve"><value>The order to search TDS Description files is as follows:
+1. Directory path ..\ED_D relative to selected ED_V_xxx.yyyy file (TDSUploader default)
+2. Same directory as  selected ED_V_xxx.yyyy
+3. Selected path from Options/General Settings
+4. The program asks for the path. This path will take over the default settings</value></data>
+  <data name="tsmnui_saveSettings_Text" xml:space="preserve"><value>Save</value></data>
+  <data name="evDgvUTCTime" xml:space="preserve"><value>UTC Time</value></data>
+  <data name="InconsistentEnvironmentData" xml:space="preserve"><value>Inconsistent environment data</value></data>
+  <data name="tsbtn_STSNT_ToolTipText" xml:space="preserve"><value>Export to STSNT</value></data>
+  <data name="VehicleName" xml:space="preserve"><value>Vehicle Name</value></data>
+  <data name="ColSortAscending" xml:space="preserve"><value>Ascending</value></data>
+  <data name="OptLabel5Text" xml:space="preserve"><value>Event Name for Filter</value></data>
+  <data name="Options" xml:space="preserve"><value>Options</value></data>
+  <data name="HelpSTSNTAccept" xml:space="preserve"><value>Press this button to accept the selected start and end times</value></data>
+  <data name="tsmnui_HelpIndex_Text" xml:space="preserve"><value>&amp;Index</value></data>
+  <data name="DefaultTimeZone" xml:space="preserve"><value>Default time zone</value></data>
+  <data name="CouldNotCreateExcel" xml:space="preserve"><value>Could not create Excel file.
+Maybe a file with this name is already open</value></data>
+  <data name="EnvUnit_HeaderText" xml:space="preserve"><value>Unit</value></data>
+  <data name="tsmnui_File_Text" xml:space="preserve"><value>&amp;File</value></data>
+  <data name="SearchIt" xml:space="preserve"><value>Do you want to search it?</value></data>
+  <data name="OpenedFile" xml:space="preserve"><value>Opened file:</value></data>
+  <data name="tsmnui_ShowMap1_ToolTipText" xml:space="preserve"><value>Show the GPS position on a map (Internet access required)</value></data>
+  <data name="evDgvEndTime" xml:space="preserve"><value>End Time</value></data>
+  <data name="FindText" xml:space="preserve"><value>Find Text</value></data>
+  <data name="OT_TT_AddSelEDV" xml:space="preserve"><value>Add the selected ED_V files to already opened</value></data>
+  <data name="MissingOTI" xml:space="preserve"><value>Missing OTI</value></data>
+  <data name="OT_TT_SwitchTreeList" xml:space="preserve"><value>Switch between tree and list view</value></data>
+  <data name="ED_V_Root_Directory" xml:space="preserve"><value>ED_V Root Directory</value></data>
+  <data name="HelpSTSNTIfYouPress" xml:space="preserve"><value>If you press this button,
+- the selected start time is the earliest start time
+  of the selected events
+- the selected end time is the latest end time
+  of the previously selected events</value></data>
+  <data name="OptGroupBox4" xml:space="preserve"><value>Font in List</value></data>
+  <data name="OptGroupBox5" xml:space="preserve"><value>Enter environment variable names (or part of it)</value></data>
+  <data name="OptGroupBox6" xml:space="preserve"><value>Define Event Name for Tab-separated File</value></data>
+  <data name="OptGroupBox7" xml:space="preserve"><value>Default Column Sort</value></data>
+  <data name="OptGroupBox1" xml:space="preserve"><value>Path to ED_D_xxx.OTI Files</value></data>
+  <data name="OptGroupBox2" xml:space="preserve"><value>Use Project Language</value></data>
+  <data name="OptGroupBox3" xml:space="preserve"><value>Path to Save Output Files</value></data>
+  <data name="OptGroupBox8" xml:space="preserve"><value>Path to STSNT</value></data>
+  <data name="DirNotExist" xml:space="preserve"><value>ED_V Root directory doesn't exist; Define it!</value></data>
+  <data name="SelectFont" xml:space="preserve"><value>Select Font</value></data>
+  <data name="EnvDescr_HeaderText" xml:space="preserve"><value>Description</value></data>
+  <data name="SaveEventsAsEXCEL" xml:space="preserve"><value>Save events as Excel</value></data>
+  <data name="ImplausibleData" xml:space="preserve"><value>Implausible data</value></data>
+  <data name="MarkAll" xml:space="preserve"><value>Mark all</value></data>
+  <data name="ExceptionOccured" xml:space="preserve"><value>Exception Occured while releasing object</value></data>
+  <data name="HelpSTSNTSelectEndTime" xml:space="preserve"><value>Select an end time of the existing events
+This will be the lastest time in the STSNT data file</value></data>
+  <data name="StartOlderThanStop" xml:space="preserve"><value>Some start times are older than end time.
+It seems, that somebody changed the system time of the diagnostic computer during the recorded period
+This can happen - don't worry about it!</value></data>
+  <data name="STSNTConfigDialog" xml:space="preserve"><value>Enter Start- and End Time</value></data>
+  <data name="evDgvEventId" xml:space="preserve"><value>Ev Id</value></data>
+  <data name="InvalidCommandLineArguments" xml:space="preserve"><value>Invalid command line arguments
+Select the files by using the menu or change the
+command line parameters</value></data>
+  <data name="tsmnui_ExportToText_Text" xml:space="preserve"><value>Export to &amp;Text</value></data>
+  <data name="tsmnui_AboutTDSView_Text" xml:space="preserve"><value>&amp;About TDSView</value></data>
+  <data name="STSNTOutput" xml:space="preserve"><value>STSNT Output</value></data>
+  <data name="tsmnui_ShowEnvironmentInSTSNT_Text" xml:space="preserve"><value>Show Environment Variables in STSNT</value></data>
+  <data name="NewLanguage" xml:space="preserve"><value>New Language</value></data>
+  <data name="ExportToExcel" xml:space="preserve"><value>Export to Excel</value></data>
+  <data name="Description" xml:space="preserve"><value>Description</value></data>
+  <data name="tsmnui_FindInEventDescription_Text" xml:space="preserve"><value>&amp;Find Text</value></data>
+  <data name="tsmnui_Filter_Text" xml:space="preserve"><value>Filter</value></data>
+  <data name="EventMap" xml:space="preserve"><value>Event Map</value></data>
+  <data name="AndOtherEventFiles" xml:space="preserve"><value>and other event files</value></data>
+  <data name="NoSTSNTPath" xml:space="preserve"><value>No path to STSNT selected
+Choose &lt;Tools&gt;/&lt;Options&gt;/&lt;Path Definitions&gt;</value></data>
+  <data name="loadConfigurationDialog_Filter" xml:space="preserve"><value>TDSView Setting Files (*.TVS)|*.TVS|All files (*.*)|*.*</value></data>
+  <data name="FilterRemoveAllFilters" xml:space="preserve"><value>Remove all Filters</value></data>
+  <data name="ODBSAddress" xml:space="preserve"><value>ODBS Address</value></data>
+  <data name="SettingeFile" xml:space="preserve"><value>TDSView Setting Files</value></data>
+  <data name="NewToolLanguageAdvice" xml:space="preserve"><value>Restart TDSView to activate the new tool language</value></data>
+  <data name="SearchInAllVisibleEntries" xml:space="preserve"><value>Search in all visible entries</value></data>
+  <data name="tsbtn_Open_ED_V_ToolTipText" xml:space="preserve"><value>Open an ED_V-OTI File (Ctrl+0)</value></data>
+  <data name="ODBSVersion" xml:space="preserve"><value>ODBS Version</value></data>
+  <data name="DiscrepanceEnvData" xml:space="preserve"><value>Discrepance between definition of environment data and acquired data in ODBS.</value></data>
+  <data name="FilterSelectAll" xml:space="preserve"><value>Select all</value></data>
+  <data name="tsmnui_Close_Text" xml:space="preserve"><value>&amp;Close</value></data>
+  <data name="AddSelection" xml:space="preserve"><value>Add Selection</value></data>
+  <data name="Negative" xml:space="preserve"><value>Negative!</value></data>
+  <data name="tsmnui_FindNext_Text" xml:space="preserve"><value>Find &amp;Next</value></data>
+  <data name="evDgvPosition" xml:space="preserve"><value>Position</value></data>
+  <data name="ExcelCreationError" xml:space="preserve"><value>Excel Creation Error</value></data>
+  <data name="TDSView" xml:space="preserve"><value>TDSView</value></data>
+  <data name="MissingPath" xml:space="preserve"><value>Missing path</value></data>
+  <data name="Warning" xml:space="preserve"><value>Warning</value></data>
+  <data name="ThisIsNoConfig" xml:space="preserve"><value>This is not a TDSView setting file</value></data>
+  <data name="Exit" xml:space="preserve"><value>E&amp;xit</value></data>
+  <data name="File" xml:space="preserve"><value>File</value></data>
+  <data name="Find" xml:space="preserve"><value>Find</value></data>
+  <data name="Done" xml:space="preserve"><value>done</value></data>
+  <data name="Item" xml:space="preserve"><value>Item</value></data>
+  <data name="Read" xml:space="preserve"><value>Read</value></data>
+  <data name="tsmnui_exportToXML_Text" xml:space="preserve"><value>Export to XML</value></data>
+  <data name="tsmnui_resetSettingsToDefault_Text" xml:space="preserve"><value>Reset to Default</value></data>
+  <data name="tsmnui_ShowRepairAndOtherText_Text" xml:space="preserve"><value>Show Repair and Other Texts</value></data>
+  <data name="SearchInSignalName" xml:space="preserve"><value>Search in Signal Name</value></data>
+  </root>

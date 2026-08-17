@@ -1,0 +1,222 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+<resheader name="resmimetype"><value>text/microsoft-resx</value></resheader><resheader name="version"><value>1.3</value></resheader><resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader><resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader><data name="cb_EventDescription.TabIndex" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"><value>4</value></data>
+  <data name="&gt;&gt;cb_SearchAll.Type" xml:space="preserve"><value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></data>
+  <data name="&gt;&gt;cb_SearchAll.Name" xml:space="preserve"><value>cb_SearchAll</value></data>
+  <data name="btn_KeepAndFind.Location" mimetype="application/x-microsoft.net.object.binary.base64"><value>AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj0yLjAuMC4wLCBD
+dWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABRTeXN0
+ZW0uRHJhd2luZy5Qb2ludAIAAAABeAF5AAAICAIAAADXAAAAZAAAAAs=</value></data><data name="btn_KeepAndFind.TabIndex" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"><value>7</value></data>
+  <data name="&gt;&gt;btn_KeepAndFind.Parent" xml:space="preserve"><value>$this</value></data>
+  <data name="cb_SignalName.Location" mimetype="application/x-microsoft.net.object.binary.base64"><value>AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj0yLjAuMC4wLCBD
+dWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABRTeXN0
+ZW0uRHJhd2luZy5Qb2ludAIAAAABeAF5AAAICAIAAAAaAAAAUwAAAAs=</value></data><data name="$this.Icon" mimetype="application/x-microsoft.net.object.binary.base64"><value>AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj0yLjAuMC4wLCBD
+dWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABNTeXN0
+ZW0uRHJhd2luZy5JY29uAgAAAAhJY29uRGF0YQhJY29uU2l6ZQcEAhNTeXN0ZW0uRHJhd2luZy5T
+aXplAgAAAAIAAAAJAwAAAAX8////E1N5c3RlbS5EcmF3aW5nLlNpemUCAAAABXdpZHRoBmhlaWdo
+dAAACAgCAAAAAAAAAAAAAAAPAwAAADYVAAACAAABAAIAEBAAAAAAIABoBAAAJgAAACAgAAAAACAA
+qBAAAI4EAAAoAAAAEAAAACAAAAABACAAAAAAAEAEAAAAAAAAAAAAAAAAAAAAAAAAOz8/FZSUlJtD
+Q0NfAAAAA////wH///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B////AaGX
+l1nSy8v/t7i45xsbGz3///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B////
+Af///wGtrq4Fu6Kip8zKyv+UlJTDAAAAHf///wH///8B////Af///wH///8B////Af///wH///8B
+////Af///wH///8B////AaKcnA3ItLS/x8fH/2RkZJMAAAAJ////Af///wH///8B////Af///wH/
+//8B////Af///wH///8B////Af///wH///8BpJqaE9LFxdO2t7f1MTExXwAAAAP///8B////Af//
+/wH///8B////Af///wH///8B////Af///wH///8B////Af///wGuo6Md1s7O4ZeYmN8LCws1LCwu
+OUpLTXE9PT51ERITRwAAABX///8B////Af///wH///8B////Af///wH///8B////Acm+vivCvr7v
+nZ6d48fFvLHp6NmX6enlucPCwNdvb2/HDQ0NQwAAAAP///8B////Af///wH///8B////Af///wFW
+Vlgdu7q10eDPtl3/+t5n//3xl//+85X//vSR9/Pyq4iHhtkKCQo9////Af///wH///8B////Af//
+/wH///8Bu7u5qcuumXX/7MZd//jhmf/56pX/+++V//3ylf/79JXs4+W1VFVUswAAAA////8B////
+Af///wH///8BcXN0F8C2rtHvv5hP/+/Nif/03JX/9uWV//jrlf/57ZX//PCT//HvnZaUk9kCAgIt
+////Af///wH///8B////Aamsrju6qJvB/M2cU//xz5f/8deV//Lhlf/05ZX/9uiV//jrlf/y6Z2z
+rarbEBAQQ////wH///8B////Af///wHHysszt6mcyfTFlVP/4bhz/+TDe//oz4H/69WF/+3Yhf/v
+2oP/7NeLqaOd1xAREjX///8B////Af///wH///8Bs7O0CcO8ttPFnHNp/+/Mkf/rzov/69OJ/+vW
+if/s2Iv/796P+evVoYiHhtMAAAAN////Af///wH///8B////Af///wHX2Nl1pZJ/tevauIv/8NWT
+/+/clf/v35X/79+V//Dclca+s9NeX2Fn////Af///wH///8B////Af///wH///8BqKioA8zMzJup
+m4vL39G4p/Xn1Jf569uT693Moca9tNmFhoaF////Af///wH///8B////Af///wH///8B////Af//
+/wH///8BysvOV7i2sru2s67XtK+r06inpbF+f4BD////Af///wH///8B////AQAA//8AAP//AAD/
+/wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8oAAAA
+IAAAAEAAAAABACAAAAAAAIAQAAAAAAAAAAAAAAAAAAAAAAAA////Af///wESEhIpIyMjXQAAAEcA
+AAAV////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af//
+/wH///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af///wETFRULQUVF
+SaGjo+fGxcX/f39/yQAAAFcAAAAN////Af///wH///8B////Af///wH///8B////Af///wH///8B
+////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af///wH/
+//8B////Af///wGdmZnJ6Obm/7q8vP/j4uL/V1dXqwAAAD////8B////Af///wH///8B////Af//
+/wH///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B////
+Af///wH///8B////Af///wH///8B////AaiVlZfTtrb/1tbW/7a4uP/Q0ND3Ly8vjwAAACf///8B
+////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af///wH/
+//8B////Af///wH///8B////Af///wH///8B////Af///wH///8Bra6uD6OFhbvdyMj/y8/P/8DB
+wf+srKzhCQkJaQAAABf///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B////
+Af///wH///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B
+o6KiF6yOjs3k1NT/wcTE/8rKyv9+fn7DAAAAUwAAAAn///8B////Af///wH///8B////Af///wH/
+//8B////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af//
+/wH///8B////Af///wH///8BopycL7abm93n3Nz/vb+//8HCwv9MTEyjAAAANf///wH///8B////
+Af///wH///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B
+////Af///wH///8B////Af///wH///8B////Af///wH///8BoJOTN8KoqO3j3t7/vL6+/7GxsfMe
+Hh6DAAAAJf///wH///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af//
+/wH///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af///wH///8BpJqa
+S8+7u/Pd29v/vL6+/4mJidcEBARlAAAAEf///wH///8B////Af///wH///8B////Af///wH///8B
+////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af///wH/
+//8B////Af///wH///8Bp5+fW9rHx/3X19f/t7i4/2FhYb0AAABJAAAACf///wH///8B////Af//
+/wH///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B////
+Af///wH///8B////Af///wH///8B////Af///wH///8BrqOjdeHU1P/Q0dH/p6io/TExMZcAAAAx
+////Af///wH///8BAAAACwAAAB0AAAAhAAAAGwAAABEAAAAH////Af///wH///8B////Af///wH/
+//8B////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af///wH///8BtKioheXc
+3P/Oz8//jY2N6RQUFHkAAAAtExMVSTk5OpdMTU/HVlhZ11FRUdU6OzzBHyAgnQICBGkAAAA5AAAA
+F////wH///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B
+////Af///wH///8BzMDAn93V1f+7u7r/eHp632VnadWipKP9x8bC69rZzM/j4tPD4+Lb29fW0++3
+t7T7e3t79zY2N8MCAgNtAAAAMQAAAAf///8B////Af///wH///8B////Af///wH///8B////Af//
+/wH///8B////Af///wH///8B////Af///wGcmJgJopqZvcfGyf/AwsT/1dDH2e7m0Yn++ttR///l
+U///83X///uL///+k////qP9+PPJz87L+W1vbvMYGBiXAAAAQQAAAA3///8B////Af///wH///8B
+////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af///wGIiIqty83L/8i9raPu
+275N//XQN///4GH///GT///2m///9ZX///WT///1j//994////2f6Obj4YWGhf0ZGRqXAAAAPwAA
+AAX///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af///wH///8BVlZY
+cc3Pzf/BsJ6b7s+yR//xyj//99Zr//zpnf/87Zv//fCV//7ylf//9JX///SV///0k//49JP/+fuX
+6+jl2Xl5ePkTEROJAAAAK////wH///8B////Af///wH///8B////Af///wH///8B////Af///wH/
+//8B////ATc4OCfP0tLvvbCixd21nVP/579D/+/GYf/54Jf/+uaZ//rqlf/77pX//PCV//7ylf/+
+85X///SV///1k//09Jf/8/mdzM3I61BRUtsAAABZAAAAEf///wH///8B////Af///wH///8B////
+Af///wH///8B////Af///wH///8BmJqdk9HOx/u4kHx3/9axR//ktUv/8tOJ//jgnf/44pX/+OeV
+//nrlf/67pX/+++V//zwlf/98pX///OT//70lf/u9Jv57O2zmZuX+xwcHJsAAAAr////Af///wH/
+//8B////Af///wH///8B////Af///wH///8B////ATc4OBPN0dLlsp6Qydilil3/26tD/+S5Z//3
+2Zv/9duV//bglf/25ZX/+OmV//nslf/57ZX/+u2V//vvlf/88JX///OT//Twm//t86PIyMTjRUZG
+ywAAAEX///8B////Af///wH///8B////Af///wH///8B////Af///wH///8BgIKDSdPT0PWmhHCj
+77aSU//VoUf/6cKD//bYnf/z2JX/9N2V//Tilf/25pX/9+mV//jqlf/465X/+e2V//rulf/88JP/
++u+X/+rsoebc2slqa2vvBQUFZQAAAAf///8B////Af///wH///8B////Af///wH///8B////Af//
+/wGsr7Fvx8S+86qCapH5wZNP/9WgUf/tyI//89OZ//LVlf/z2pX/8+CV//Tklf/15pX/9uiV//fp
+lf/46pX/+OyV//rulf/775P/6uej8eHdv3+CgPcQEBB5AAAAC////wH///8B////Af///wH///8B
+////Af///wH///8B////AairrX3Bu7Xzq4Jpj/rCk03/2qhd//LPnf/y1Jv/8dWX//HZlf/x3pX/
+8uKV//Pklf/05ZX/9eeV//bolf/26ZX/+OuV//vuk//r46ny4tu/h4iI9RQUFIEAAAAJ////Af//
+/wH///8B////Af///wH///8B////Af///wH///8BxcjJdcXAu/OgfGGX9L6PT//Zplf/6MGH/+3L
+j//u0ZP/8NiX//Hfmf/z5Jn/9OeZ//Xomf/26Zn/9uiZ//Xol//26ZX/9+iR/+nan+zazbWEhoX3
+FBYWdwAAAAP///8B////Af///wH///8B////Af///wH///8B////Af///wHMzs9T0tHO85R3Xanh
+r4Jd/9SgS//So1n/06Nb/9SnXf/WrGP/2rFn/9y4bf/du2//375x/+HBcf/jxHH/5sdx/+jLcf/q
+z3X/58yJ3s6+uXZ4efUNDQ5Z////Af///wH///8B////Af///wH///8B////Af///wH///8B////
+AbOztCPg4uPvmINwyb2OZmn/2ahX/+7Ijf/oxon/5cJ//+PBe//jwXn/4sN3/+LEef/jxnn/5cl7
+/+jNgf/r1YX/8N6J//Hdk//u1qPFwbrdYWFk2QEBAS////8B////Af///wH///8B////Af///wH/
+//8B////Af///wH///8B////Adrd4Ke7sqnvkGxKiei+jl3/9M2N//TWn//x2Jv/8tub//Lfm//y
+5Jv/8uWb//Lkm//y5Jn/8eOZ//Hjmf/x5Jf/8tyf7N3Jr6Wko/87PT2XAAAAB////wH///8B////
+Af///wH///8B////Af///wH///8B////Af///wH///8Bt7i6Q+Hi4vuQfGfBp35Wb/jguXv/+dmZ
+/+/Tlf/v1pX/79qV/+/elf/v35X/79+V/+/flf/v35X/8OCT//Hel//s0Z3Cu7Lfg4SG7Q0NDjn/
+//8B////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B1dfak83K
+x/9/ZEuntJVxgf/y05X/9diT//DXk//w25X/796V/+/flf/v35X/79+V//Dhk//045P/7tObzcGz
+z6Giov89Pj51////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B
+////Af///wGoqKgN2dvfucC7t/+BaVGxv6iIm/jozZ3/8tmR//Pekf/z4pP/8+OT//Tkkf/25o//
+9eGP+ePMnce7rtWurq//Xl9hlQAAAAP///8B////Af///wH///8B////Af///wH///8B////Af//
+/wH///8B////Af///wH///8B////Af///wGqqqoL1djbq8TCwf+cjn/jvK+XxdjKsq3n18Of8eHR
+l/bm1pXz49GX59bFodLCssO+tq/3rrCy/2NlZIP///8B////Af///wH///8B////Af///wH///8B
+////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af///wGmpqYDysvNa83O0d3D
+wL3/vbiv/7ixp+26sqflurGo47qwqu25tK//sbGw/5CSk8VPT1BF////Af///wH///8B////Af//
+/wH///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B////
+Af///wH///8BtLW1EaOkplWqrK6Xs7S2vba2t82ztLXLp6ios4WHiIeUlpdBMzM0Bf///wH///8B
+////Af///wH///8B////Af///wH///8B////AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACw==</value></data><data name="$this.Text" xml:space="preserve"><value>Find Text</value></data>
+  <data name="&gt;&gt;tb_SearchString.Type" xml:space="preserve"><value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></data>
+  <data name="&gt;&gt;tb_SearchString.Name" xml:space="preserve"><value>tb_SearchString</value></data>
+  <data name="cb_SearchAll.Location" mimetype="application/x-microsoft.net.object.binary.base64"><value>AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj0yLjAuMC4wLCBD
+dWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABRTeXN0
+ZW0uRHJhd2luZy5Qb2ludAIAAAABeAF5AAAICAIAAAAaAAAAagAAAAs=</value></data><data name="cb_MarkAll.Location" mimetype="application/x-microsoft.net.object.binary.base64"><value>AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj0yLjAuMC4wLCBD
+dWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABRTeXN0
+ZW0uRHJhd2luZy5Qb2ludAIAAAABeAF5AAAICAIAAADXAAAAPAAAAAs=</value></data><data name="$this.ClientSize" mimetype="application/x-microsoft.net.object.binary.base64"><value>AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj0yLjAuMC4wLCBD
+dWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABNTeXN0
+ZW0uRHJhd2luZy5TaXplAgAAAAV3aWR0aAZoZWlnaHQAAAgIAgAAAB8CAACKAAAACw==</value></data><data name="cb_SignalName.TabIndex" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"><value>5</value></data>
+  <data name="btn_Find.Size" mimetype="application/x-microsoft.net.object.binary.base64"><value>AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj0yLjAuMC4wLCBD
+dWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABNTeXN0
+ZW0uRHJhd2luZy5TaXplAgAAAAV3aWR0aAZoZWlnaHQAAAgIAgAAAEsAAAAXAAAACw==</value></data><data name="btn_Find.Text" xml:space="preserve"><value>Find</value></data>
+  <data name="&gt;&gt;cb_SearchAll.ZOrder" xml:space="preserve"><value>0</value></data>
+  <data name="tb_SearchString.Location" mimetype="application/x-microsoft.net.object.binary.base64"><value>AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj0yLjAuMC4wLCBD
+dWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABRTeXN0
+ZW0uRHJhd2luZy5Qb2ludAIAAAABeAF5AAAICAIAAAAaAAAAFgAAAAs=</value></data><data name="btn_Cancel.TabIndex" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"><value>3</value></data>
+  <data name="tb_SearchString.TabIndex" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"><value>0</value></data>
+  <data name="cb_SearchAll.TabIndex" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"><value>8</value></data>
+  <data name="btn_Cancel.Size" mimetype="application/x-microsoft.net.object.binary.base64"><value>AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj0yLjAuMC4wLCBD
+dWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABNTeXN0
+ZW0uRHJhd2luZy5TaXplAgAAAAV3aWR0aAZoZWlnaHQAAAgIAgAAAEsAAAAXAAAACw==</value></data><data name="btn_Cancel.Text" xml:space="preserve"><value>Cancel</value></data>
+  <data name="&gt;&gt;cb_SearchAll.Parent" xml:space="preserve"><value>$this</value></data>
+  <data name="&gt;&gt;cb_SignalName.Name" xml:space="preserve"><value>cb_SignalName</value></data>
+  <data name="&gt;&gt;cb_SignalName.Type" xml:space="preserve"><value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></data>
+  <data name="&gt;&gt;btn_KeepAndFind.Type" xml:space="preserve"><value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></data>
+  <data name="&gt;&gt;btn_KeepAndFind.Name" xml:space="preserve"><value>btn_KeepAndFind</value></data>
+  <data name="cb_EventDescription.Location" mimetype="application/x-microsoft.net.object.binary.base64"><value>AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj0yLjAuMC4wLCBD
+dWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABRTeXN0
+ZW0uRHJhd2luZy5Qb2ludAIAAAABeAF5AAAICAIAAAAaAAAAPAAAAAs=</value></data><data name="tb_SearchString.Size" mimetype="application/x-microsoft.net.object.binary.base64"><value>AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj0yLjAuMC4wLCBD
+dWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABNTeXN0
+ZW0uRHJhd2luZy5TaXplAgAAAAV3aWR0aAZoZWlnaHQAAAgIAgAAAOkBAAAUAAAACw==</value></data><data name="&gt;&gt;btn_Cancel.Name" xml:space="preserve"><value>btn_Cancel</value></data>
+  <data name="&gt;&gt;btn_Cancel.Type" xml:space="preserve"><value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></data>
+  <data name="btn_KeepAndFind.Visible" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"><value>False</value></data>
+  <data name="btn_Find.TabIndex" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"><value>1</value></data>
+  <data name="cb_EventDescription.Size" mimetype="application/x-microsoft.net.object.binary.base64"><value>AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj0yLjAuMC4wLCBD
+dWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABNTeXN0
+ZW0uRHJhd2luZy5TaXplAgAAAAV3aWR0aAZoZWlnaHQAAAgIAgAAAJsAAAARAAAACw==</value></data><data name="cb_EventDescription.Text" xml:space="preserve"><value>Search in event description</value></data>
+  <data name="cb_MarkAll.TabIndex" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"><value>6</value></data>
+  <data name="&gt;&gt;cb_EventDescription.Type" xml:space="preserve"><value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></data>
+  <data name="&gt;&gt;cb_EventDescription.Name" xml:space="preserve"><value>cb_EventDescription</value></data>
+  <data name="cb_EventDescription.AutoSize" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"><value>True</value></data>
+  <data name="&gt;&gt;btn_Find.Name" xml:space="preserve"><value>btn_Find</value></data>
+  <data name="&gt;&gt;btn_Find.Type" xml:space="preserve"><value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></data>
+  <data name="cb_SearchAll.Size" mimetype="application/x-microsoft.net.object.binary.base64"><value>AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj0yLjAuMC4wLCBD
+dWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABNTeXN0
+ZW0uRHJhd2luZy5TaXplAgAAAAV3aWR0aAZoZWlnaHQAAAgIAgAAAJYAAAARAAAACw==</value></data><data name="cb_SearchAll.Text" xml:space="preserve"><value>Search in all visible entries</value></data>
+  <data name="cb_SignalName.AutoSize" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"><value>True</value></data>
+  <data name="btn_KeepAndFind.Size" mimetype="application/x-microsoft.net.object.binary.base64"><value>AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj0yLjAuMC4wLCBD
+dWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABNTeXN0
+ZW0uRHJhd2luZy5TaXplAgAAAAV3aWR0aAZoZWlnaHQAAAgIAgAAAHAAAAAXAAAACw==</value></data><data name="btn_KeepAndFind.Text" xml:space="preserve"><value>Keep Sel 'n Find</value></data>
+  <data name="&gt;&gt;btn_Find.ZOrder" xml:space="preserve"><value>7</value></data>
+  <data name="&gt;&gt;cb_MarkAll.Name" xml:space="preserve"><value>cb_MarkAll</value></data>
+  <data name="&gt;&gt;cb_MarkAll.Type" xml:space="preserve"><value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></data>
+  <data name="&gt;&gt;btn_Find.Parent" xml:space="preserve"><value>$this</value></data>
+  <data name="&gt;&gt;cb_EventDescription.ZOrder" xml:space="preserve"><value>4</value></data>
+  <data name="cb_MarkAll.Size" mimetype="application/x-microsoft.net.object.binary.base64"><value>AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj0yLjAuMC4wLCBD
+dWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABNTeXN0
+ZW0uRHJhd2luZy5TaXplAgAAAAV3aWR0aAZoZWlnaHQAAAgIAgAAAEIAAAARAAAACw==</value></data><data name="cb_MarkAll.Text" xml:space="preserve"><value>Mark all </value></data>
+  <data name="&gt;&gt;tb_SearchString.ZOrder" xml:space="preserve"><value>5</value></data>
+  <data name="&gt;&gt;cb_SignalName.ZOrder" xml:space="preserve"><value>3</value></data>
+  <data name="cb_SearchAll.ImeMode" mimetype="application/x-microsoft.net.object.binary.base64"><value>AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj0yLjAu
+MC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAA
+ABxTeXN0ZW0uV2luZG93cy5Gb3Jtcy5JbWVNb2RlAQAAAAd2YWx1ZV9fAAgCAAAAAAAAAAs=</value></data><data name="&gt;&gt;cb_EventDescription.Parent" xml:space="preserve"><value>$this</value></data>
+  <data name="&gt;&gt;cb_SignalName.Parent" xml:space="preserve"><value>$this</value></data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve"><value>FindText</value></data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve"><value>System.Windows.Forms.Form, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></data>
+  <data name="&gt;&gt;cb_MarkAll.Parent" xml:space="preserve"><value>$this</value></data>
+  <data name="&gt;&gt;tb_SearchString.Parent" xml:space="preserve"><value>$this</value></data>
+  <data name="cb_SearchAll.AutoSize" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"><value>True</value></data>
+  <data name="btn_Find.Location" mimetype="application/x-microsoft.net.object.binary.base64"><value>AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj0yLjAuMC4wLCBD
+dWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABRTeXN0
+ZW0uRHJhd2luZy5Qb2ludAIAAAABeAF5AAAICAIAAABaAQAAZAAAAAs=</value></data><data name="&gt;&gt;btn_Cancel.ZOrder" xml:space="preserve"><value>6</value></data>
+  <data name="cb_MarkAll.AutoSize" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"><value>True</value></data>
+  <data name="&gt;&gt;cb_MarkAll.ZOrder" xml:space="preserve"><value>2</value></data>
+  <data name="btn_Cancel.Location" mimetype="application/x-microsoft.net.object.binary.base64"><value>AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj0yLjAuMC4wLCBD
+dWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABRTeXN0
+ZW0uRHJhd2luZy5Qb2ludAIAAAABeAF5AAAICAIAAAC4AQAAZAAAAAs=</value></data><data name="cb_SignalName.Text" xml:space="preserve"><value>Search in Signal Name</value></data>
+  <data name="cb_SignalName.Size" mimetype="application/x-microsoft.net.object.binary.base64"><value>AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj0yLjAuMC4wLCBD
+dWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABNTeXN0
+ZW0uRHJhd2luZy5TaXplAgAAAAV3aWR0aAZoZWlnaHQAAAgIAgAAAIYAAAARAAAACw==</value></data><data name="$this.AutoScaleDimensions" mimetype="application/x-microsoft.net.object.binary.base64"><value>AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj0yLjAuMC4wLCBD
+dWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABRTeXN0
+ZW0uRHJhd2luZy5TaXplRgIAAAAFd2lkdGgGaGVpZ2h0AAALCwIAAAAAAMBAAABQQQs=</value></data><data name="&gt;&gt;btn_KeepAndFind.ZOrder" xml:space="preserve"><value>1</value></data>
+  <data name="&gt;&gt;btn_Cancel.Parent" xml:space="preserve"><value>$this</value></data>
+  </root>
