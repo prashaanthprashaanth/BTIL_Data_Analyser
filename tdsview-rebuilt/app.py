@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import argparse
+from collections import Counter
+from datetime import datetime, time
 import queue
 import threading
 import tkinter as tk
@@ -256,6 +258,12 @@ class TDSViewApplication:
         self.messages: queue.Queue = queue.Queue()
         self.sort_column = "reference"
         self.sort_reverse = False
+        self.depth_dialog_open = False
+        self.depth_selected_fault_keys: list[tuple[int, int]] = []
+        self.depth_selected_parameter_keys: list[tuple[str, str, str]] = []
+        self.depth_start_time: datetime | None = None
+        self.depth_end_time: datetime | None = None
+        self.depth_row_records = {}
         self._build_ui()
         self.root.after_idle(self._maximize_window)
         self.root.after(100, self._poll_messages)
@@ -313,6 +321,8 @@ class TDSViewApplication:
         style.map("Treeview.Heading", background=[("active", dark_blue)])
         style.configure("TPanedwindow", background=mid_blue)
         style.configure("TScrollbar", background=blue, troughcolor=light_blue, bordercolor="white", arrowcolor="white")
+        style.configure("TNotebook", background="white", bordercolor=mid_blue)
+        style.configure("TNotebook.Tab", padding=(14, 6), font=("Segoe UI", 10, "bold"))
 
         title = ttk.Frame(self.root, padding=(10, 7, 10, 2))
         title.pack(fill="x")
@@ -341,16 +351,24 @@ class TDSViewApplication:
         self.details_button = ttk.Button(toolbar_buttons, text="Event Details / Repair", command=self.show_details, state="disabled")
         self.details_button.pack(side="left", padx=4)
 
+        self.notebook = ttk.Notebook(self.root)
+        self.notebook.pack(fill="both", expand=True, padx=10)
+        self.viewer_tab = ttk.Frame(self.notebook)
+        self.depth_tab = ttk.Frame(self.notebook)
+        self.notebook.add(self.viewer_tab, text="Event Viewer")
+        self.notebook.add(self.depth_tab, text="Depth Analysis")
+        self.notebook.bind("<<NotebookTabChanged>>", self._tab_changed)
+
         self.coverage_text = tk.StringVar(value="TOTAL FAULT COUNT: 0")
         ttk.Label(
-            self.root,
+            self.viewer_tab,
             textvariable=self.coverage_text,
             font=("Segoe UI", 11, "bold"),
             anchor="center",
             padding=(4, 2, 4, 5),
         ).pack(fill="x")
 
-        path_frame = ttk.Frame(self.root, padding=(10, 0, 10, 6))
+        path_frame = ttk.Frame(self.viewer_tab, padding=(0, 0, 0, 6))
         path_frame.pack(fill="x")
         initial_path_text = (
             f"Default ED_D: {self.edd_path}"
@@ -371,9 +389,9 @@ class TDSViewApplication:
             pady=4,
         )
 
-        pane = ttk.Panedwindow(self.root, orient="horizontal")
+        pane = ttk.Panedwindow(self.viewer_tab, orient="horizontal")
         self.main_pane = pane
-        pane.pack(fill="both", expand=True, padx=10)
+        pane.pack(fill="both", expand=True)
         left = ttk.Frame(pane)
         right = ttk.Frame(pane)
         pane.add(left, weight=4)
@@ -467,6 +485,8 @@ class TDSViewApplication:
         self.environment_grid.pack(fill="both", expand=True)
         self.environment_grid.clear()
 
+        self._build_depth_analysis_tab()
+
         status = ttk.Frame(self.root, padding=(10, 5))
         status.pack(fill="x")
         self.status_text = tk.StringVar(value="Ready")
@@ -474,6 +494,230 @@ class TDSViewApplication:
         self.metadata_text = tk.StringVar()
         ttk.Label(status, textvariable=self.metadata_text).pack(side="right")
         self.root.after(400, self._set_initial_split)
+
+    def _build_depth_analysis_tab(self):
+        header = ttk.Frame(self.depth_tab, padding=(0, 6, 0, 6))
+        header.pack(fill="x")
+        self.depth_status_text = tk.StringVar(value="Select faults and environment parameters to build depth analysis")
+        ttk.Label(
+            header,
+            textvariable=self.depth_status_text,
+            font=("Segoe UI", 11, "bold"),
+        ).pack(side="left")
+        self.depth_select_button = ttk.Button(
+            header,
+            text="Select Faults / Parameters",
+            command=self.open_depth_analysis_dialog,
+            state="disabled",
+        )
+        self.depth_select_button.pack(side="right")
+
+        table_frame = ttk.Frame(self.depth_tab)
+        table_frame.pack(fill="both", expand=True)
+        self.depth_table = ttk.Treeview(table_frame, show="headings", selectmode="browse")
+        depth_y = ttk.Scrollbar(table_frame, orient="vertical", command=self.depth_table.yview)
+        depth_x = ttk.Scrollbar(table_frame, orient="horizontal", command=self.depth_table.xview)
+        self.depth_table.configure(yscrollcommand=depth_y.set, xscrollcommand=depth_x.set)
+        self.depth_table.grid(row=0, column=0, sticky="nsew")
+        depth_y.grid(row=0, column=1, sticky="ns")
+        depth_x.grid(row=1, column=0, sticky="ew")
+        table_frame.rowconfigure(0, weight=1)
+        table_frame.columnconfigure(0, weight=1)
+        self.depth_table.tag_configure("alternate", background="#EAF3FF")
+        self._clear_depth_analysis_table()
+
+    def _clear_depth_analysis_table(self):
+        self.depth_row_records.clear()
+        self.depth_table.delete(*self.depth_table.get_children())
+        self.depth_table.configure(columns=("date_time", "fault"))
+        self.depth_table.heading("date_time", text="Date Time")
+        self.depth_table.heading("fault", text="Fault")
+        self.depth_table.column("date_time", width=165, minwidth=120, anchor="center")
+        self.depth_table.column("fault", width=420, minwidth=220, anchor="w")
+
+    def _tab_changed(self, _event=None):
+        if not hasattr(self, "notebook") or self.notebook.select() != str(self.depth_tab):
+            return
+        if not self.dataset:
+            messagebox.showwarning("Open ED_V first", "Open an ED_V file before using Depth Analysis.")
+            self.notebook.select(self.viewer_tab)
+            return
+        if not self.depth_selected_fault_keys or not self.depth_selected_parameter_keys:
+            self.root.after(100, self.open_depth_analysis_dialog)
+
+    @staticmethod
+    def _fault_key(record):
+        return (record.process_id, record.event_id)
+
+    def _fault_label(self, key: tuple[int, int], count: int | None = None) -> str:
+        process_id, event_id = key
+        definition = self.dataset.definitions.events.get(key) if self.dataset else None
+        prefix = f"{count:05d} | " if count is not None else ""
+        name = definition.name if definition else "Definition unavailable"
+        description = definition.description if definition else ""
+        return f"{prefix}{process_id:02X}:{event_id:03X} | {name} | {description}"
+
+    @staticmethod
+    def _parameter_key(row):
+        return (row.name, row.description, row.unit)
+
+    @staticmethod
+    def _parameter_heading(key: tuple[str, str, str]) -> str:
+        name, _description, unit = key
+        return f"{name} [{unit}]" if unit else name
+
+    @staticmethod
+    def _trigger_value(row) -> str:
+        if 0 in row.offsets_ms:
+            return row.values[row.offsets_ms.index(0)]
+        return next((value for value in row.values if value != ""), "")
+
+    @staticmethod
+    def _parse_depth_datetime(value: str, *, end_of_day: bool = False) -> datetime | None:
+        text = value.strip()
+        if not text:
+            return None
+        formats = [
+            "%Y-%m-%d %H:%M:%S",
+            "%Y-%m-%d %H:%M",
+            "%Y-%m-%d",
+            "%d-%m-%Y %H:%M:%S",
+            "%d-%m-%Y %H:%M",
+            "%d-%m-%Y",
+        ]
+        for pattern in formats:
+            try:
+                parsed = datetime.strptime(text, pattern)
+                if pattern in {"%Y-%m-%d", "%d-%m-%Y"}:
+                    return datetime.combine(parsed.date(), time.max if end_of_day else time.min)
+                return parsed
+            except ValueError:
+                pass
+        raise ValueError("Use YYYY-MM-DD HH:MM:SS or DD-MM-YYYY HH:MM:SS")
+
+    def _depth_date_default_text(self) -> tuple[str, str]:
+        if not self.dataset or not self.dataset.edv.records:
+            return "", ""
+        starts = [record.start_time for record in self.dataset.edv.records if record.start_time]
+        if not starts:
+            return "", ""
+        return min(starts).strftime("%Y-%m-%d %H:%M:%S"), max(starts).strftime("%Y-%m-%d %H:%M:%S")
+
+    def _depth_filtered_records(
+        self,
+        start_time: datetime | None,
+        end_time: datetime | None,
+        fault_keys: set[tuple[int, int]] | None = None,
+    ):
+        if not self.dataset:
+            return []
+        records = []
+        for record in self.dataset.edv.records:
+            if start_time and record.start_time < start_time:
+                continue
+            if end_time and record.start_time > end_time:
+                continue
+            if fault_keys is not None and self._fault_key(record) not in fault_keys:
+                continue
+            records.append(record)
+        return records
+
+    def _depth_fault_choices(self, start_time: datetime | None, end_time: datetime | None):
+        counts = Counter(self._fault_key(record) for record in self._depth_filtered_records(start_time, end_time))
+        choices = []
+        for key, count in counts.items():
+            label = self._fault_label(key, count)
+            choices.append(
+                {
+                    "key": key,
+                    "count": count,
+                    "label": label,
+                    "search": label.lower(),
+                }
+            )
+        choices.sort(key=lambda item: (-item["count"], item["key"][0], item["key"][1]))
+        return choices
+
+    def _depth_parameter_choices(
+        self,
+        fault_keys: set[tuple[int, int]],
+        start_time: datetime | None,
+        end_time: datetime | None,
+    ):
+        counts = Counter()
+        for record in self._depth_filtered_records(start_time, end_time, fault_keys):
+            for row in environment_rows(record):
+                counts[self._parameter_key(row)] += 1
+        choices = []
+        for key, count in counts.items():
+            name, description, unit = key
+            label = self._parameter_heading(key)
+            choices.append(
+                {
+                    "key": key,
+                    "count": count,
+                    "label": label,
+                    "name": name,
+                    "description": description,
+                    "unit": unit,
+                    "search": f"{label} {description}".lower(),
+                }
+            )
+        choices.sort(key=lambda item: (-item["count"], item["name"], item["description"], item["unit"]))
+        return choices
+
+    def _refresh_depth_analysis_table(self):
+        self._clear_depth_analysis_table()
+        if not self.dataset or not self.depth_selected_fault_keys or not self.depth_selected_parameter_keys:
+            self.depth_status_text.set("Select faults and environment parameters to build depth analysis")
+            return
+
+        fault_keys = set(self.depth_selected_fault_keys)
+        records = sorted(
+            self._depth_filtered_records(self.depth_start_time, self.depth_end_time, fault_keys),
+            key=lambda record: (record.start_time, record.reference_number),
+        )
+        columns = ["date_time", "fault"] + [f"param_{index}" for index, _key in enumerate(self.depth_selected_parameter_keys)]
+        self.depth_table.configure(columns=columns)
+        self.depth_table.heading("date_time", text="Date Time")
+        self.depth_table.heading("fault", text="Fault")
+        self.depth_table.column("date_time", width=165, minwidth=125, anchor="center")
+        self.depth_table.column("fault", width=420, minwidth=240, anchor="w")
+        for index, parameter_key in enumerate(self.depth_selected_parameter_keys):
+            column = f"param_{index}"
+            heading = self._parameter_heading(parameter_key)
+            self.depth_table.heading(column, text=heading)
+            self.depth_table.column(column, width=max(120, min(260, len(heading) * 8)), minwidth=90, anchor="center")
+
+        for row_index, record in enumerate(records):
+            definition = record.definition
+            fault_label = (
+                f"{record.process_id:02X}:{record.event_id:03X} | {definition.name if definition else 'Definition unavailable'}"
+            )
+            environment_by_key = {self._parameter_key(row): row for row in environment_rows(record)}
+            values = [record.start_time.strftime("%Y-%m-%d %H:%M:%S"), fault_label]
+            for parameter_key in self.depth_selected_parameter_keys:
+                row = environment_by_key.get(parameter_key)
+                values.append(self._trigger_value(row) if row else "")
+            iid = f"depth-{row_index}"
+            self.depth_row_records[iid] = record
+            self.depth_table.insert(
+                "",
+                "end",
+                iid=iid,
+                values=values,
+                tags=("alternate",) if row_index % 2 else (),
+            )
+
+        date_range = ""
+        if self.depth_start_time or self.depth_end_time:
+            start = self.depth_start_time.strftime("%Y-%m-%d %H:%M:%S") if self.depth_start_time else "start"
+            end = self.depth_end_time.strftime("%Y-%m-%d %H:%M:%S") if self.depth_end_time else "end"
+            date_range = f" | {start} to {end}"
+        self.depth_status_text.set(
+            f"Depth Analysis: {len(records)} records, {len(self.depth_selected_fault_keys)} faults, "
+            f"{len(self.depth_selected_parameter_keys)} parameters{date_range}"
+        )
 
     def _set_initial_split(self):
         width = self.main_pane.winfo_width()
@@ -571,7 +815,9 @@ class TDSViewApplication:
             return
         self.status_text.set("Decoding ED_V records and environment data...")
         self.export_button.configure(state="disabled")
+        self.html_export_button.configure(state="disabled")
         self.details_button.configure(state="disabled")
+        self.depth_select_button.configure(state="disabled")
 
         def worker():
             try:
@@ -594,6 +840,7 @@ class TDSViewApplication:
                         self.export_button.configure(state="normal")
                         self.html_export_button.configure(state="normal")
                         self.details_button.configure(state="normal")
+                        self.depth_select_button.configure(state="normal")
                     messagebox.showerror("Decode failed", str(payload))
                 elif kind == "progress":
                     self.status_text.set(str(payload))
@@ -610,6 +857,12 @@ class TDSViewApplication:
     def _loaded(self, dataset):
         self.dataset = dataset
         self.edd_path = dataset.definitions.source_path
+        self.depth_selected_fault_keys = []
+        self.depth_selected_parameter_keys = []
+        self.depth_start_time = None
+        self.depth_end_time = None
+        self._clear_depth_analysis_table()
+        self.depth_status_text.set("Select faults and environment parameters to build depth analysis")
         self.visible_records = list(dataset.edv.records)
         self.path_text.set(f"ED_V: {dataset.edv.source_path}    |    ED_D: {dataset.definitions.source_path}")
         if dataset.warnings:
@@ -628,6 +881,7 @@ class TDSViewApplication:
         self.export_button.configure(state="normal")
         self.html_export_button.configure(state="normal")
         self.details_button.configure(state="normal")
+        self.depth_select_button.configure(state="normal")
         self._apply_filter()
 
     def _record_values(self, record):
@@ -765,6 +1019,345 @@ class TDSViewApplication:
         viewer.configure(yscrollcommand=scroll.set)
         viewer.pack(side="left", fill="both", expand=True)
         scroll.pack(side="right", fill="y")
+
+    def open_depth_analysis_dialog(self):
+        if self.depth_dialog_open:
+            return
+        if not self.dataset:
+            messagebox.showwarning("Open ED_V first", "Open an ED_V file before using Depth Analysis.")
+            return
+
+        self.depth_dialog_open = True
+        dialog = tk.Toplevel(self.root)
+        dialog.title("Depth Analysis Selection")
+        dialog.geometry("1000x650")
+        dialog.transient(self.root)
+        dialog.grab_set()
+
+        selected_faults = list(self.depth_selected_fault_keys)
+        selected_parameter_set = set(self.depth_selected_parameter_keys)
+        default_start, default_end = self._depth_date_default_text()
+        start_var = tk.StringVar(
+            value=self.depth_start_time.strftime("%Y-%m-%d %H:%M:%S") if self.depth_start_time else default_start
+        )
+        end_var = tk.StringVar(
+            value=self.depth_end_time.strftime("%Y-%m-%d %H:%M:%S") if self.depth_end_time else default_end
+        )
+        search_var = tk.StringVar()
+        fault_combo_var = tk.StringVar()
+        date_status = tk.StringVar()
+        parameter_search_var = tk.StringVar()
+        parameter_status = tk.StringVar(value="Select faults first, then choose environment parameters")
+
+        current_start: datetime | None = None
+        current_end: datetime | None = None
+        fault_choices = []
+        filtered_fault_choices = []
+        choice_by_label = {}
+        parameter_choices = []
+        parameter_key_by_iid = {}
+
+        tabs = ttk.Notebook(dialog)
+        tabs.pack(fill="both", expand=True, padx=10, pady=10)
+        fault_tab = ttk.Frame(tabs, padding=8)
+        parameter_tab = ttk.Frame(tabs, padding=8)
+        tabs.add(fault_tab, text="1. Fault Selection")
+        tabs.add(parameter_tab, text="2. Environment Parameters")
+        tabs.tab(parameter_tab, state="disabled")
+
+        fault_tab.columnconfigure(0, weight=3)
+        fault_tab.columnconfigure(1, weight=1)
+        fault_tab.rowconfigure(0, weight=1)
+
+        fault_left = ttk.Frame(fault_tab)
+        fault_left.grid(row=0, column=0, sticky="nsew", padx=(0, 10))
+        fault_left.columnconfigure(0, weight=1)
+
+        ttk.Label(fault_left, text="Search fault:").grid(row=0, column=0, sticky="w")
+        search_entry = ttk.Entry(fault_left, textvariable=search_var)
+        search_entry.grid(row=1, column=0, sticky="ew", pady=(3, 8))
+
+        ttk.Label(fault_left, text="Matching faults by descending occurrence:").grid(row=2, column=0, sticky="w")
+        fault_combo = ttk.Combobox(fault_left, textvariable=fault_combo_var, state="readonly")
+        fault_combo.grid(row=3, column=0, sticky="ew", pady=(3, 8))
+
+        selected_frame = ttk.Frame(fault_left)
+        selected_frame.grid(row=4, column=0, sticky="nsew")
+        fault_left.rowconfigure(4, weight=1)
+        selected_list = tk.Listbox(selected_frame, selectmode="extended", height=12, exportselection=False)
+        selected_scroll = ttk.Scrollbar(selected_frame, orient="vertical", command=selected_list.yview)
+        selected_list.configure(yscrollcommand=selected_scroll.set)
+        selected_list.grid(row=0, column=0, sticky="nsew")
+        selected_scroll.grid(row=0, column=1, sticky="ns")
+        selected_frame.rowconfigure(0, weight=1)
+        selected_frame.columnconfigure(0, weight=1)
+
+        fault_buttons = ttk.Frame(fault_left, padding=(0, 8, 0, 0))
+        fault_buttons.grid(row=5, column=0, sticky="ew")
+
+        date_frame = ttk.LabelFrame(fault_tab, text="Date / Time Range")
+        date_frame.grid(row=0, column=1, sticky="nsew")
+        date_frame.columnconfigure(0, weight=1)
+        ttk.Label(date_frame, text="From:").grid(row=0, column=0, sticky="w", padx=8, pady=(8, 2))
+        start_entry = ttk.Entry(date_frame, textvariable=start_var)
+        start_entry.grid(row=1, column=0, sticky="ew", padx=8)
+        ttk.Label(date_frame, text="To:").grid(row=2, column=0, sticky="w", padx=8, pady=(8, 2))
+        end_entry = ttk.Entry(date_frame, textvariable=end_var)
+        end_entry.grid(row=3, column=0, sticky="ew", padx=8)
+        ttk.Label(date_frame, text="Format: YYYY-MM-DD HH:MM:SS").grid(row=4, column=0, sticky="w", padx=8, pady=(8, 2))
+        ttk.Label(date_frame, textvariable=date_status, wraplength=250).grid(row=6, column=0, sticky="ew", padx=8, pady=(8, 0))
+
+        parameter_tab.columnconfigure(0, weight=1)
+        parameter_tab.rowconfigure(3, weight=1)
+        ttk.Label(parameter_tab, text="Search environment parameter:").grid(row=0, column=0, sticky="w")
+        parameter_search_entry = ttk.Entry(parameter_tab, textvariable=parameter_search_var)
+        parameter_search_entry.grid(row=1, column=0, sticky="ew", pady=(3, 8))
+        ttk.Label(parameter_tab, textvariable=parameter_status).grid(row=2, column=0, sticky="w", pady=(0, 6))
+
+        parameter_frame = ttk.Frame(parameter_tab)
+        parameter_frame.grid(row=3, column=0, sticky="nsew")
+        parameter_tree = ttk.Treeview(
+            parameter_frame,
+            columns=("pick", "name", "unit", "description", "count"),
+            show="headings",
+            selectmode="browse",
+        )
+        for column, label, width, anchor in [
+            ("pick", "Pick", 55, "center"),
+            ("name", "Parameter", 220, "w"),
+            ("unit", "Unit", 80, "center"),
+            ("description", "Description", 420, "w"),
+            ("count", "Rows", 70, "center"),
+        ]:
+            parameter_tree.heading(column, text=label)
+            parameter_tree.column(column, width=width, minwidth=50, anchor=anchor, stretch=column in {"name", "description"})
+        parameter_y = ttk.Scrollbar(parameter_frame, orient="vertical", command=parameter_tree.yview)
+        parameter_x = ttk.Scrollbar(parameter_frame, orient="horizontal", command=parameter_tree.xview)
+        parameter_tree.configure(yscrollcommand=parameter_y.set, xscrollcommand=parameter_x.set)
+        parameter_tree.grid(row=0, column=0, sticky="nsew")
+        parameter_y.grid(row=0, column=1, sticky="ns")
+        parameter_x.grid(row=1, column=0, sticky="ew")
+        parameter_frame.rowconfigure(0, weight=1)
+        parameter_frame.columnconfigure(0, weight=1)
+        parameter_tree.tag_configure("alternate", background="#EAF3FF")
+
+        parameter_buttons = ttk.Frame(parameter_tab, padding=(0, 8, 0, 0))
+        parameter_buttons.grid(row=4, column=0, sticky="ew")
+
+        def close_dialog(cancelled: bool = True):
+            self.depth_dialog_open = False
+            try:
+                dialog.grab_release()
+            except tk.TclError:
+                pass
+            dialog.destroy()
+            if cancelled and (not self.depth_selected_fault_keys or not self.depth_selected_parameter_keys):
+                if self.notebook.select() == str(self.depth_tab):
+                    self.notebook.select(self.viewer_tab)
+
+        def read_date_range(show_error: bool = False):
+            try:
+                start_time = self._parse_depth_datetime(start_var.get(), end_of_day=False)
+                end_time = self._parse_depth_datetime(end_var.get(), end_of_day=True)
+                if start_time and end_time and start_time > end_time:
+                    raise ValueError("From date must be before To date")
+                return start_time, end_time
+            except ValueError as exc:
+                date_status.set(str(exc))
+                if show_error:
+                    messagebox.showerror("Invalid date range", str(exc), parent=dialog)
+                return None
+
+        def refresh_selected_faults():
+            count_by_key = {choice["key"]: choice["count"] for choice in fault_choices}
+            selected_list.delete(0, tk.END)
+            for key in selected_faults:
+                selected_list.insert(tk.END, self._fault_label(key, count_by_key.get(key, 0)))
+
+        def filter_fault_choices(*_):
+            nonlocal filtered_fault_choices
+            terms = search_var.get().strip().lower().split()
+            if terms:
+                filtered_fault_choices = [
+                    choice
+                    for choice in fault_choices
+                    if all(term in choice["search"] for term in terms)
+                ]
+            else:
+                filtered_fault_choices = list(fault_choices)
+            values = [choice["label"] for choice in filtered_fault_choices]
+            fault_combo.configure(values=values)
+            if values:
+                if fault_combo_var.get() not in values:
+                    fault_combo_var.set(values[0])
+            else:
+                fault_combo_var.set("")
+
+        def refresh_fault_choices(show_error: bool = False):
+            nonlocal current_start, current_end, fault_choices, filtered_fault_choices, choice_by_label
+            parsed = read_date_range(show_error)
+            if parsed is None:
+                return False
+            current_start, current_end = parsed
+            fault_choices = self._depth_fault_choices(current_start, current_end)
+            choice_by_label = {choice["label"]: choice for choice in fault_choices}
+            total_records = len(self._depth_filtered_records(current_start, current_end))
+            date_status.set(f"{total_records} event records and {len(fault_choices)} fault types in this range")
+            filter_fault_choices()
+            refresh_selected_faults()
+            return True
+
+        def add_current_fault(_event=None):
+            choice = choice_by_label.get(fault_combo_var.get())
+            if choice is None and filtered_fault_choices:
+                choice = filtered_fault_choices[0]
+            if not choice:
+                return "break"
+            key = choice["key"]
+            if key not in selected_faults:
+                selected_faults.append(key)
+                refresh_selected_faults()
+            return "break"
+
+        def remove_selected_faults():
+            for index in reversed(selected_list.curselection()):
+                selected_faults.pop(index)
+            refresh_selected_faults()
+
+        def render_parameter_tree():
+            parameter_key_by_iid.clear()
+            parameter_tree.delete(*parameter_tree.get_children())
+            terms = parameter_search_var.get().strip().lower().split()
+            visible_count = 0
+            for index, choice in enumerate(parameter_choices):
+                if terms and not all(term in choice["search"] for term in terms):
+                    continue
+                iid = f"param-{index}"
+                parameter_key_by_iid[iid] = choice["key"]
+                parameter_tree.insert(
+                    "",
+                    "end",
+                    iid=iid,
+                    values=(
+                        "[x]" if choice["key"] in selected_parameter_set else "[ ]",
+                        choice["name"],
+                        choice["unit"],
+                        choice["description"],
+                        choice["count"],
+                    ),
+                    tags=("alternate",) if visible_count % 2 else (),
+                )
+                visible_count += 1
+            parameter_status.set(
+                f"{visible_count} visible parameters; {len(selected_parameter_set)} selected"
+            )
+
+        def build_parameter_choices():
+            nonlocal parameter_choices
+            if not selected_faults:
+                messagebox.showwarning("Select faults", "Select one or more faults before choosing parameters.", parent=dialog)
+                return
+            if not refresh_fault_choices(show_error=True):
+                return
+            fault_key_set = set(selected_faults)
+            parameter_choices = self._depth_parameter_choices(fault_key_set, current_start, current_end)
+            available_keys = {choice["key"] for choice in parameter_choices}
+            selected_parameter_set.intersection_update(available_keys)
+            if not parameter_choices:
+                messagebox.showwarning(
+                    "No parameters",
+                    "No environment parameters were found for the selected faults and date range.",
+                    parent=dialog,
+                )
+                return
+            tabs.tab(parameter_tab, state="normal")
+            render_parameter_tree()
+            tabs.select(parameter_tab)
+            parameter_search_entry.focus_set()
+
+        def toggle_parameter(iid: str):
+            key = parameter_key_by_iid.get(iid)
+            if not key:
+                return
+            if key in selected_parameter_set:
+                selected_parameter_set.remove(key)
+            else:
+                selected_parameter_set.add(key)
+            render_parameter_tree()
+
+        def toggle_clicked_parameter(event):
+            iid = parameter_tree.identify_row(event.y)
+            column = parameter_tree.identify_column(event.x)
+            if iid and column == "#1":
+                toggle_parameter(iid)
+                return "break"
+            return None
+
+        def toggle_focused_parameter(_event=None):
+            focused = parameter_tree.focus()
+            if focused:
+                toggle_parameter(focused)
+            return "break"
+
+        def select_all_visible():
+            for key in parameter_key_by_iid.values():
+                selected_parameter_set.add(key)
+            render_parameter_tree()
+
+        def clear_visible():
+            for key in parameter_key_by_iid.values():
+                selected_parameter_set.discard(key)
+            render_parameter_tree()
+
+        def final_submit():
+            if not selected_faults:
+                messagebox.showwarning("Select faults", "Select one or more faults.", parent=dialog)
+                tabs.select(fault_tab)
+                return
+            if not selected_parameter_set:
+                messagebox.showwarning("Select parameters", "Select one or more environment parameters.", parent=dialog)
+                return
+            ordered_parameters = [
+                choice["key"]
+                for choice in parameter_choices
+                if choice["key"] in selected_parameter_set
+            ]
+            if not ordered_parameters:
+                messagebox.showwarning("Select parameters", "Selected parameters are not available in this range.", parent=dialog)
+                return
+            self.depth_selected_fault_keys = list(selected_faults)
+            self.depth_selected_parameter_keys = ordered_parameters
+            self.depth_start_time = current_start
+            self.depth_end_time = current_end
+            self._refresh_depth_analysis_table()
+            self.notebook.select(self.depth_tab)
+            close_dialog(cancelled=False)
+
+        ttk.Button(fault_buttons, text="Add Fault", command=add_current_fault).pack(side="left", padx=(0, 6))
+        ttk.Button(fault_buttons, text="Remove Selected", command=remove_selected_faults).pack(side="left", padx=(0, 6))
+        ttk.Button(fault_buttons, text="Next: Environment Parameters", command=build_parameter_choices).pack(side="right")
+        ttk.Button(date_frame, text="Apply Date Range", command=lambda: refresh_fault_choices(show_error=True)).grid(
+            row=5, column=0, sticky="ew", padx=8, pady=(8, 0)
+        )
+
+        ttk.Button(parameter_buttons, text="Back to Fault Selection", command=lambda: tabs.select(fault_tab)).pack(side="left")
+        ttk.Button(parameter_buttons, text="Select All Visible", command=select_all_visible).pack(side="left", padx=(8, 0))
+        ttk.Button(parameter_buttons, text="Clear Visible", command=clear_visible).pack(side="left", padx=(8, 0))
+        ttk.Button(parameter_buttons, text="Final Submit", command=final_submit).pack(side="right")
+
+        search_var.trace_add("write", filter_fault_choices)
+        parameter_search_var.trace_add("write", lambda *_: render_parameter_tree())
+        search_entry.bind("<Return>", add_current_fault)
+        fault_combo.bind("<Return>", add_current_fault)
+        selected_list.bind("<Delete>", lambda _event: remove_selected_faults())
+        start_entry.bind("<Return>", lambda _event: refresh_fault_choices(show_error=True))
+        end_entry.bind("<Return>", lambda _event: refresh_fault_choices(show_error=True))
+        parameter_tree.bind("<ButtonRelease-1>", toggle_clicked_parameter)
+        parameter_tree.bind("<space>", toggle_focused_parameter)
+
+        dialog.protocol("WM_DELETE_WINDOW", close_dialog)
+        refresh_fault_choices(show_error=False)
+        search_entry.focus_set()
 
     def export_excel(self):
         if not self.dataset:

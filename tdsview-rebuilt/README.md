@@ -23,6 +23,7 @@ The interface provides:
 - clear labels for exact versus inferred environment mappings;
 - complete Excel export;
 - standalone HTML report export for upload to an internal/OEM web server.
+- Depth Analysis tab with date-range filtering, multi-fault selection by occurrence count, environment-parameter checklists, and a comparison table.
 
 ## Complete Excel export
 
