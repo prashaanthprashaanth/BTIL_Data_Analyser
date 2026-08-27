@@ -4,7 +4,7 @@ import argparse
 from pathlib import Path
 
 from .decoder import decode_dataset, environment_rows
-from .export import export_xlsx
+from .export import export_html, export_xlsx
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -13,6 +13,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--edd", required=True, help="matching ED_D .oti definition")
     parser.add_argument("--edt", help="optional ED_T .oti repair-text definition")
     parser.add_argument("--xlsx", help="write a complete XLSX report")
+    parser.add_argument("--html", help="write a standalone HTML report")
     parser.add_argument("--event", type=int, help="print environment data for a reference number")
     parser.add_argument("--time-shift", type=float, default=0.0, help="hours added to timestamps")
     return parser
@@ -53,6 +54,8 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.xlsx:
         export_xlsx(dataset, args.xlsx, progress=print)
+    if args.html:
+        export_html(dataset, args.html, progress=print)
     return 0
 
 

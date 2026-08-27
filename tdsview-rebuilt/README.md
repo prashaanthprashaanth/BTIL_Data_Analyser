@@ -21,7 +21,8 @@ The interface provides:
 - raw process/event IDs and all four error codes;
 - ED_T repair, cause, and remedy text;
 - clear labels for exact versus inferred environment mappings;
-- complete Excel export.
+- complete Excel export;
+- standalone HTML report export for upload to an internal/OEM web server.
 
 ## Complete Excel export
 
@@ -33,7 +34,19 @@ py -3 -m tds_decoder.cli "C:\path\ED_V_file.9240" `
   --xlsx "C:\path\complete-report.xlsx"
 ```
 
-The workbook contains:
+## Standalone HTML export
+
+Use **Export HTML Report** in the viewer to create a single `.html` file containing the event list, all environment samples, fault summary, repair text, file information, OTI provenance, and warnings. The file has no external dependencies and can be uploaded to a web server for browser viewing.
+
+Command line:
+
+```powershell
+py -3 -m tds_decoder.cli "C:\path\ED_V_file.9240" `
+  --edd "C:\path\ED_D_file.oti" `
+  --html "C:\path\complete-report.html"
+```
+
+Both the Excel workbook and HTML report contain:
 
 1. **Event List** — the original 45-column fault/event table.
 2. **Environment Data** — every variable and every time sample, with changed values highlighted.

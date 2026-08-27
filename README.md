@@ -19,6 +19,7 @@ Main capabilities include:
 - engineering-unit conversion using OTI scaling definitions;
 - selectable environment rows and keyboard/keypad navigation;
 - search, sorting, fault totals, repair details, and Excel export;
+- standalone HTML report export for OEM/server upload;
 - explicit OTI revision and mapping warnings.
 
 ## Repository structure

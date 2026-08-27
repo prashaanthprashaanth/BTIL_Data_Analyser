@@ -8,7 +8,17 @@ from pathlib import Path
 from tkinter import filedialog, messagebox, ttk
 
 from tds_decoder import decode_dataset, environment_rows, find_definition, read_edv
-from tds_decoder.export import export_xlsx
+from tds_decoder.export import export_html, export_xlsx
+
+
+DEFAULT_EDD_PATH = Path(
+    r"F:\DEE RS ED Backup\OTI_FIles for BT Prop\1415\OTI Files\ED_D_IR_PRP___001_005_004_020_EN.oti"
+)
+
+
+def matching_edt_path(edd_path: Path) -> Path | None:
+    sibling = edd_path.with_name(edd_path.name.replace("ED_D", "ED_T", 1))
+    return sibling if sibling.is_file() else None
 
 
 class EnvironmentGrid(ttk.Frame):
@@ -239,8 +249,8 @@ class TDSViewApplication:
         self.root.configure(background="white")
         self.dataset = None
         self.edv_path: Path | None = None
-        self.edd_path: Path | None = None
-        self.edt_path: Path | None = None
+        self.edd_path: Path | None = DEFAULT_EDD_PATH if DEFAULT_EDD_PATH.is_file() else None
+        self.edt_path: Path | None = matching_edt_path(self.edd_path) if self.edd_path else None
         self.visible_records = []
         self.record_by_iid = {}
         self.messages: queue.Queue = queue.Queue()
@@ -321,6 +331,13 @@ class TDSViewApplication:
         ttk.Button(toolbar_buttons, text="Select ED_D OTI", command=self.select_oti).pack(side="left", padx=4)
         self.export_button = ttk.Button(toolbar_buttons, text="Export Complete Excel", command=self.export_excel, state="disabled")
         self.export_button.pack(side="left", padx=4)
+        self.html_export_button = ttk.Button(
+            toolbar_buttons,
+            text="Export HTML Report",
+            command=self.export_html_report,
+            state="disabled",
+        )
+        self.html_export_button.pack(side="left", padx=4)
         self.details_button = ttk.Button(toolbar_buttons, text="Event Details / Repair", command=self.show_details, state="disabled")
         self.details_button.pack(side="left", padx=4)
 
@@ -335,7 +352,12 @@ class TDSViewApplication:
 
         path_frame = ttk.Frame(self.root, padding=(10, 0, 10, 6))
         path_frame.pack(fill="x")
-        self.path_text = tk.StringVar(value="Open an ED_V file and select an ED_D OTI definition")
+        initial_path_text = (
+            f"Default ED_D: {self.edd_path}"
+            if self.edd_path
+            else "Open an ED_V file and select an ED_D OTI definition"
+        )
+        self.path_text = tk.StringVar(value=initial_path_text)
         ttk.Label(path_frame, textvariable=self.path_text, anchor="center").pack(fill="x")
         self.warning_text = tk.StringVar()
         self.warning_label = tk.Label(
@@ -491,8 +513,7 @@ class TDSViewApplication:
         if not chosen:
             return
         self.edd_path = Path(chosen)
-        sibling = self.edd_path.with_name(self.edd_path.name.replace("ED_D", "ED_T", 1))
-        self.edt_path = sibling if sibling.is_file() else None
+        self.edt_path = matching_edt_path(self.edd_path)
         if self.edv_path:
             self._start_load()
         else:
@@ -511,7 +532,7 @@ class TDSViewApplication:
         self.edv_path = edv_path
         if edd_path:
             self.edd_path = edd_path
-            self.edt_path = edt_path
+            self.edt_path = edt_path if edt_path else matching_edt_path(self.edd_path)
         if not self.edd_path:
             self.status_text.set("Reading ED_V header and locating the nearest OTI definition...")
             self.root.update_idletasks()
@@ -542,8 +563,7 @@ class TDSViewApplication:
         if edt_path:
             self.edt_path = edt_path
         elif not self.edt_path:
-            sibling = self.edd_path.with_name(self.edd_path.name.replace("ED_D", "ED_T", 1))
-            self.edt_path = sibling if sibling.is_file() else None
+            self.edt_path = matching_edt_path(self.edd_path)
         self._start_load()
 
     def _start_load(self):
@@ -572,14 +592,17 @@ class TDSViewApplication:
                     self.status_text.set("Decode failed")
                     if self.dataset:
                         self.export_button.configure(state="normal")
+                        self.html_export_button.configure(state="normal")
                         self.details_button.configure(state="normal")
                     messagebox.showerror("Decode failed", str(payload))
                 elif kind == "progress":
                     self.status_text.set(str(payload))
                 elif kind == "exported":
-                    self.status_text.set(f"Excel saved: {payload}")
-                    messagebox.showinfo("Export complete", f"Complete report saved to:\n{payload}")
+                    report_type, output = payload
+                    self.status_text.set(f"{report_type} saved: {output}")
+                    messagebox.showinfo("Export complete", f"{report_type} saved to:\n{output}")
                     self.export_button.configure(state="normal")
+                    self.html_export_button.configure(state="normal")
         except queue.Empty:
             pass
         self.root.after(100, self._poll_messages)
@@ -603,6 +626,7 @@ class TDSViewApplication:
             f"{dataset.environment_event_count} environments decoded"
         )
         self.export_button.configure(state="normal")
+        self.html_export_button.configure(state="normal")
         self.details_button.configure(state="normal")
         self._apply_filter()
 
@@ -755,6 +779,7 @@ class TDSViewApplication:
         if not chosen:
             return
         self.export_button.configure(state="disabled")
+        self.html_export_button.configure(state="disabled")
         self.status_text.set("Preparing complete Excel export...")
 
         def worker():
@@ -764,7 +789,37 @@ class TDSViewApplication:
                     chosen,
                     progress=lambda value: self.messages.put(("progress", value)),
                 )
-                self.messages.put(("exported", output))
+                self.messages.put(("exported", ("Excel report", output)))
+            except Exception as exc:
+                self.messages.put(("error", exc))
+                self.messages.put(("progress", "Export failed"))
+
+        threading.Thread(target=worker, daemon=True).start()
+
+    def export_html_report(self):
+        if not self.dataset:
+            return
+        default = self.dataset.edv.source_path.stem + "_complete.html"
+        chosen = filedialog.asksaveasfilename(
+            title="Export standalone HTML event and environment report",
+            initialfile=default,
+            defaultextension=".html",
+            filetypes=[("HTML report", "*.html"), ("All files", "*.*")],
+        )
+        if not chosen:
+            return
+        self.export_button.configure(state="disabled")
+        self.html_export_button.configure(state="disabled")
+        self.status_text.set("Preparing standalone HTML report...")
+
+        def worker():
+            try:
+                output = export_html(
+                    self.dataset,
+                    chosen,
+                    progress=lambda value: self.messages.put(("progress", value)),
+                )
+                self.messages.put(("exported", ("HTML report", output)))
             except Exception as exc:
                 self.messages.put(("error", exc))
                 self.messages.put(("progress", "Export failed"))
@@ -784,13 +839,22 @@ def main():
     args = parse_arguments()
     root = tk.Tk()
     application = TDSViewApplication(root)
+    if args.edd:
+        application.edd_path = Path(args.edd)
+        if args.edt:
+            application.edt_path = Path(args.edt)
+        else:
+            sibling = application.edd_path.with_name(application.edd_path.name.replace("ED_D", "ED_T", 1))
+            application.edt_path = sibling if sibling.is_file() else None
+        if not args.edv:
+            application.path_text.set(f"ED_D: {application.edd_path}")
     if args.edv:
         root.after(
             150,
             lambda: application.load_paths(
                 Path(args.edv),
-                Path(args.edd) if args.edd else None,
-                Path(args.edt) if args.edt else None,
+                application.edd_path,
+                application.edt_path,
             ),
         )
     root.mainloop()

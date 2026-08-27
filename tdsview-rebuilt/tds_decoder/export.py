@@ -1,9 +1,10 @@
 from __future__ import annotations
 
 from collections import Counter
-from datetime import timedelta
+from datetime import datetime
+from html import escape
 from pathlib import Path
-from typing import Callable, Iterable
+from typing import Callable, Iterable, TextIO
 
 from openpyxl import Workbook
 from openpyxl.cell import WriteOnlyCell
@@ -66,6 +67,10 @@ HEADER_FILL = PatternFill("solid", fgColor="FFF200")
 CHANGED_FILL = PatternFill("solid", fgColor="FFD700")
 INFERRED_FILL = PatternFill("solid", fgColor="FFE6B3")
 HEADER_FONT = Font(bold=True)
+
+
+def _html(value: object) -> str:
+    return escape("" if value is None else str(value), quote=True)
 
 
 def _time(value) -> str:
@@ -140,6 +145,28 @@ def event_export_row(dataset: DecodedDataset, record: EventRecord, source_index:
     ]
 
 
+def file_information_rows(dataset: DecodedDataset) -> list[tuple[str, object]]:
+    header = dataset.edv.header
+    return [
+        ("ED_V file", str(dataset.edv.source_path)),
+        ("File ID", header.file_id),
+        ("ED protocol", header.ed_version),
+        ("Project", header.project_name),
+        ("ED_V project version", header.project_version),
+        ("ED_D file", str(dataset.definitions.source_path)),
+        ("ED_D project version", dataset.definitions.project_version),
+        ("OTI schema version", dataset.definitions.schema_version),
+        ("Vehicle", header.vehicle_name),
+        ("ODBS address", header.odbs_address),
+        ("Readout date", header.readout_date),
+        ("Readout time", header.readout_time),
+        ("Event records", len(dataset.edv.records)),
+        ("Mapped event definitions", dataset.mapped_event_count),
+        ("Decodable environments", dataset.environment_event_count),
+        ("Four-byte trailer", dataset.edv.trailer.hex().upper()),
+    ]
+
+
 def _header_row(sheet, headers: Iterable[str]):
     cells = []
     for value in headers:
@@ -153,6 +180,408 @@ def _header_row(sheet, headers: Iterable[str]):
 def _set_widths(sheet, widths: list[float]):
     for index, width in enumerate(widths, 1):
         sheet.column_dimensions[get_column_letter(index)].width = width
+
+
+def _attributes(values: dict[str, object]) -> str:
+    rendered = []
+    for key, value in values.items():
+        if value is None or value == "":
+            continue
+        rendered.append(f' {key}="{_html(value)}"')
+    return "".join(rendered)
+
+
+def _write_table_start(handle: TextIO, table_id: str, headers: Iterable[str]):
+    handle.write(f'<div class="table-wrap"><table id="{_html(table_id)}">\n<thead><tr>')
+    for header in headers:
+        handle.write(f"<th>{_html(header)}</th>")
+    handle.write("</tr></thead>\n<tbody>\n")
+
+
+def _write_table_end(handle: TextIO):
+    handle.write("</tbody>\n</table></div>\n")
+
+
+def _write_cells(
+    handle: TextIO,
+    values: Iterable[object],
+    *,
+    tag: str = "td",
+    classes: Iterable[str] | None = None,
+):
+    class_values = list(classes or [])
+    for index, value in enumerate(values):
+        class_name = class_values[index] if index < len(class_values) else ""
+        class_attr = f' class="{_html(class_name)}"' if class_name else ""
+        handle.write(f"<{tag}{class_attr}>{_html(value)}</{tag}>")
+
+
+def _write_report_head(handle: TextIO, title: str):
+    handle.write("<!doctype html>\n<html lang=\"en\">\n<head>\n")
+    handle.write("<meta charset=\"utf-8\">\n")
+    handle.write("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n")
+    handle.write(f"<title>{_html(title)}</title>\n")
+    handle.write(
+        """
+<style>
+:root {
+  color-scheme: light;
+  --blue: #0b5cab;
+  --blue-dark: #063b73;
+  --blue-soft: #eaf3ff;
+  --line: #9cbfe5;
+  --text: #17324d;
+  --muted: #536a80;
+  --changed: #ffe88a;
+  --inferred: #fff5d7;
+  --warning: #f8df8f;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background: #f7f9fc;
+  color: var(--text);
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.45;
+}
+header {
+  background: #ffffff;
+  border-bottom: 1px solid var(--line);
+  padding: 18px 24px 14px;
+}
+h1 {
+  margin: 0 0 6px;
+  color: var(--blue-dark);
+  font-size: 24px;
+  letter-spacing: 0;
+}
+h2 {
+  margin: 28px 0 10px;
+  color: var(--blue-dark);
+  font-size: 18px;
+  letter-spacing: 0;
+}
+p {
+  margin: 0 0 8px;
+}
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px 24px;
+  background: #ffffff;
+  border-bottom: 1px solid var(--line);
+}
+nav a {
+  color: #ffffff;
+  background: var(--blue);
+  padding: 6px 10px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 600;
+}
+main {
+  padding: 0 24px 32px;
+}
+.muted {
+  color: var(--muted);
+}
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 8px;
+  margin: 16px 0 4px;
+}
+.stat {
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 10px 12px;
+}
+.stat strong {
+  display: block;
+  color: var(--blue-dark);
+  font-size: 20px;
+}
+.notice {
+  margin: 10px 0;
+  padding: 10px 12px;
+  background: var(--warning);
+  border: 1px solid #c49b2b;
+  border-radius: 4px;
+}
+.table-wrap {
+  max-height: 76vh;
+  overflow: auto;
+  background: #ffffff;
+  border: 1px solid var(--line);
+}
+table {
+  width: max-content;
+  min-width: 100%;
+  border-collapse: collapse;
+}
+th,
+td {
+  border: 1px solid var(--line);
+  padding: 5px 7px;
+  vertical-align: top;
+  white-space: nowrap;
+}
+th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--blue);
+  color: #ffffff;
+  text-align: left;
+}
+tbody tr:nth-child(even) td {
+  background: var(--blue-soft);
+}
+tbody tr.inferred td {
+  background: var(--inferred);
+}
+td.changed,
+tbody tr.inferred td.changed {
+  background: var(--changed);
+  font-weight: 700;
+}
+td.pre {
+  white-space: pre-wrap;
+  min-width: 420px;
+}
+footer {
+  padding: 18px 24px;
+  color: var(--muted);
+  border-top: 1px solid var(--line);
+  background: #ffffff;
+}
+@media print {
+  nav {
+    display: none;
+  }
+  .table-wrap {
+    max-height: none;
+    overflow: visible;
+  }
+  th {
+    position: static;
+  }
+}
+</style>
+</head>
+<body>
+"""
+    )
+
+
+def export_html(
+    dataset: DecodedDataset,
+    path: str | Path,
+    progress: Callable[[str], None] | None = None,
+) -> Path:
+    output = Path(path)
+    output.parent.mkdir(parents=True, exist_ok=True)
+    header = dataset.edv.header
+    generated = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    title = f"{dataset.edv.source_path.stem} - TDS HTML Report"
+    max_samples = max(
+        (record.environment_block_count_start for record in dataset.edv.records), default=0
+    )
+
+    with output.open("w", encoding="utf-8", newline="\n") as handle:
+        _write_report_head(handle, title)
+        handle.write("<header>\n")
+        handle.write("<h1>BTIL TDS Event & Environment Report</h1>\n")
+        handle.write(
+            f"<p class=\"muted\">Generated { _html(generated) } from { _html(dataset.edv.source_path.name) }</p>\n"
+        )
+        handle.write("<div class=\"stats\">\n")
+        for label, value in [
+            ("Total events", len(dataset.edv.records)),
+            ("Named events", dataset.mapped_event_count),
+            ("Decoded environments", dataset.environment_event_count),
+            ("Vehicle", header.vehicle_name),
+            ("Project", header.project_name),
+            ("ED_V version", header.project_version),
+            ("ED_D version", dataset.definitions.project_version),
+            ("ODBS", header.odbs_address),
+        ]:
+            handle.write("<div class=\"stat\">")
+            handle.write(f"<span>{_html(label)}</span><strong>{_html(value)}</strong>")
+            handle.write("</div>\n")
+        handle.write("</div>\n")
+        if dataset.warnings:
+            handle.write("<div class=\"notice\"><strong>Warnings</strong><ul>")
+            for warning in dataset.warnings:
+                handle.write(f"<li>{_html(warning)}</li>")
+            handle.write("</ul></div>\n")
+        handle.write("</header>\n")
+
+        handle.write(
+            """
+<nav aria-label="Report sections">
+  <a href="#file-information">File Information</a>
+  <a href="#event-list">Event List</a>
+  <a href="#environment-data">Environment Data</a>
+  <a href="#fault-summary">Fault Summary</a>
+  <a href="#repair-text">Repair Text</a>
+</nav>
+<main>
+"""
+        )
+
+        handle.write('<section id="file-information">\n<h2>File Information</h2>\n')
+        _write_table_start(handle, "file-info-table", ["Field", "Value"])
+        for key, value in file_information_rows(dataset):
+            handle.write("<tr>")
+            _write_cells(handle, [key, value])
+            handle.write("</tr>\n")
+        for warning in dataset.warnings:
+            handle.write("<tr>")
+            _write_cells(handle, ["Warning", warning])
+            handle.write("</tr>\n")
+        _write_table_end(handle)
+        handle.write("</section>\n")
+
+        if progress:
+            progress("Writing HTML event list...")
+        handle.write('<section id="event-list">\n<h2>Event List</h2>\n')
+        _write_table_start(handle, "event-list-table", EVENT_HEADERS)
+        for record in dataset.edv.records:
+            attrs = _attributes(
+                {
+                    "data-reference": f"{record.reference_number:05d}",
+                    "data-process": f"{record.process_id:02X}",
+                    "data-event": f"{record.event_id:03X}",
+                }
+            )
+            handle.write(f"<tr{attrs}>")
+            _write_cells(handle, event_export_row(dataset, record))
+            handle.write("</tr>\n")
+        _write_table_end(handle)
+        handle.write("</section>\n")
+
+        if progress:
+            progress("Writing HTML environment data...")
+        environment_headers = [
+            "Ref Nr",
+            "Start Time",
+            "Event Name",
+            "Event Description",
+            "Process",
+            "Event Id",
+            "Env Block",
+            "Mapping",
+            "Variable Name",
+            "Description",
+            "Unit",
+        ]
+        for sample in range(1, max_samples + 1):
+            environment_headers.extend([f"Offset {sample} (ms)", f"Value {sample}"])
+        handle.write('<section id="environment-data">\n<h2>Environment Data</h2>\n')
+        _write_table_start(handle, "environment-data-table", environment_headers)
+        for record_index, record in enumerate(dataset.edv.records, 1):
+            event_name = (
+                record.definition.name
+                if record.definition
+                else f"Unknown {record.process_id:02X}:{record.event_id:03X}"
+            )
+            event_description = record.definition.description if record.definition else ""
+            block_name = record.environment_block.block_id if record.environment_block else ""
+            row_class = "inferred" if record.environment_mapping != "exact" else ""
+            attrs = _attributes(
+                {
+                    "class": row_class,
+                    "data-reference": f"{record.reference_number:05d}",
+                    "data-process": f"{record.process_id:02X}",
+                    "data-event": f"{record.event_id:03X}",
+                    "data-mapping": record.environment_mapping,
+                }
+            )
+            for environment in environment_rows(record):
+                values: list[object] = [
+                    f"{record.reference_number:05d}",
+                    _time(record.start_time),
+                    event_name,
+                    event_description,
+                    f"{record.process_id:02X}",
+                    f"{record.event_id:03X}",
+                    block_name,
+                    record.environment_mapping,
+                    environment.name,
+                    environment.description,
+                    environment.unit,
+                ]
+                classes = [""] * len(values)
+                for sample in range(max_samples):
+                    if sample < len(environment.values):
+                        values.extend([environment.offsets_ms[sample], environment.values[sample]])
+                        classes.extend(["", "changed" if environment.changed[sample] else ""])
+                    else:
+                        values.extend(["", ""])
+                        classes.extend(["", ""])
+                handle.write(f"<tr{attrs}>")
+                _write_cells(handle, values, classes=classes)
+                handle.write("</tr>\n")
+            if progress and record_index % 50 == 0:
+                progress(f"HTML environment data: {record_index}/{len(dataset.edv.records)} events")
+        _write_table_end(handle)
+        handle.write("</section>\n")
+
+        handle.write('<section id="fault-summary">\n<h2>Fault Summary</h2>\n')
+        _write_table_start(handle, "fault-summary-table", ["Count", "Process", "Event Id", "Event Name", "Description"])
+        counts = Counter((record.process_id, record.event_id) for record in dataset.edv.records)
+        for (process_id, event_id), count in counts.most_common():
+            definition = dataset.definitions.events.get((process_id, event_id))
+            handle.write("<tr>")
+            _write_cells(
+                handle,
+                [
+                    count,
+                    f"{process_id:02X}",
+                    f"{event_id:03X}",
+                    definition.name if definition else "",
+                    definition.description if definition else "Definition unavailable",
+                ],
+            )
+            handle.write("</tr>\n")
+        _write_table_end(handle)
+        handle.write("</section>\n")
+
+        handle.write('<section id="repair-text">\n<h2>Repair Text</h2>\n')
+        _write_table_start(handle, "repair-text-table", ["Event Name", "Event Description", "Repair / Cause / Remedy"])
+        used_names: set[str] = set()
+        for record in dataset.edv.records:
+            if not record.definition or record.definition.name in used_names:
+                continue
+            used_names.add(record.definition.name)
+            details = dataset.texts.details_for(record.definition.name)
+            handle.write("<tr>")
+            _write_cells(
+                handle,
+                [record.definition.name, record.definition.description, details],
+                classes=["", "", "pre"],
+            )
+            handle.write("</tr>\n")
+        _write_table_end(handle)
+        handle.write("</section>\n")
+        handle.write("</main>\n")
+        handle.write(
+            f"<footer>Generated by BTIL Data Analyser. Source ED_D: {_html(dataset.definitions.source_path)}</footer>\n"
+        )
+        handle.write("</body>\n</html>\n")
+
+    if progress:
+        progress(f"Saved {output}")
+    return output
 
 
 def export_xlsx(
@@ -283,27 +712,8 @@ def export_xlsx(
     _set_widths(repairs_sheet, [40, 60, 100])
 
     info_sheet = workbook.create_sheet("File Information")
-    header = dataset.edv.header
-    information = [
-        ("ED_V file", str(dataset.edv.source_path)),
-        ("File ID", header.file_id),
-        ("ED protocol", header.ed_version),
-        ("Project", header.project_name),
-        ("ED_V project version", header.project_version),
-        ("ED_D file", str(dataset.definitions.source_path)),
-        ("ED_D project version", dataset.definitions.project_version),
-        ("OTI schema version", dataset.definitions.schema_version),
-        ("Vehicle", header.vehicle_name),
-        ("ODBS address", header.odbs_address),
-        ("Readout date", header.readout_date),
-        ("Readout time", header.readout_time),
-        ("Event records", len(dataset.edv.records)),
-        ("Mapped event definitions", dataset.mapped_event_count),
-        ("Decodable environments", dataset.environment_event_count),
-        ("Four-byte trailer", dataset.edv.trailer.hex().upper()),
-    ]
     _header_row(info_sheet, ["Field", "Value"])
-    for key, value in information:
+    for key, value in file_information_rows(dataset):
         info_sheet.append([key, value])
     for warning in dataset.warnings:
         info_sheet.append(["Warning", warning])
