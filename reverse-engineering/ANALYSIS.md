@@ -234,3 +234,4 @@ Notable original features include multiple ED_V files, packages, raw view, five 
 - `tdsview-rebuilt/` — clean Python decoder, GUI, CLI, tests, and documentation.
 - `tdsview-rebuilt/output/39240_20260814_complete.xlsx` — complete `.020`-based report.
 
+![1786814235488](image/ANALYSIS/1786814235488.png)![1786814238349](image/ANALYSIS/1786814238349.png)
