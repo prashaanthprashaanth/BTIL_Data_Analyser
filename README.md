@@ -12,6 +12,8 @@ To start it on Windows, double-click:
 tdsview-rebuilt\run_tdsview.bat
 ```
 
+To create the self-contained Windows executable, double-click `tdsview-rebuilt\build_exe.bat`. The resulting app is `tdsview-rebuilt\dist\TDSView.exe`; it needs no Python installation and leaves no browser server running after its window is closed.
+
 Main capabilities include:
 
 - complete VCU event and fault decoding;

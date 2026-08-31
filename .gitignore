@@ -22,4 +22,10 @@ desktop.ini
 *.log
 *.tmp
 *.temp
+
 tdsview-rebuilt/output/*.html
+
+# PyInstaller build output
+/tdsview-rebuilt/build/
+/tdsview-rebuilt/dist/*
+!/tdsview-rebuilt/dist/TDSView.exe

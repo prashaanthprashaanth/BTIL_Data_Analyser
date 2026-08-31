@@ -6,6 +6,18 @@ This is a maintainable replacement for Bombardier `TDSView.exe`. It decodes MITR
 
 Double-click `run_tdsview.bat`, then choose an `ED_V` file. The program searches the Desktop and Downloads folders for the closest compatible English ED_D OTI definition. The exact ED_D file in use and every version mismatch are shown at the top of the window.
 
+For a self-contained Windows build that does not require Python, double-click `build_exe.bat` and then open:
+
+```text
+dist\TDSView.exe
+```
+
+The executable is a native desktop application. It does not launch a browser or a local server, and its process exits when the application window is closed. Build dependencies can be installed with:
+
+```powershell
+py -3 -m pip install -r requirements.txt -r requirements-build.txt
+```
+
 You can also start with explicit files:
 
 ```powershell
