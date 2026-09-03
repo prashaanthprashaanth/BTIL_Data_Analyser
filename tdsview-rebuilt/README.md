@@ -49,7 +49,7 @@ py -3 -m tds_decoder.cli "C:\path\ED_V_file.9240" `
 
 ## Standalone HTML export
 
-Use **Export HTML Report** in the viewer to create a single `.html` file containing the event list, all environment samples, fault summary, repair text, file information, OTI provenance, and warnings. The file has no external dependencies and can be uploaded to a web server for browser viewing.
+Use **Export HTML Report** in the viewer to create a single `.html` file containing the event list, all environment samples, fault summary, repair text, file information, OTI provenance, and warnings. The compact report deduplicates repeated diagnostic labels and renders environment rows in searchable pages, keeping every value while dramatically reducing file size and browser memory use. It has no external dependencies and can be opened offline or uploaded to a web server.
 
 Command line:
 

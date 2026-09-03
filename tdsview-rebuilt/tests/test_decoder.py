@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+import json
 import os
+import re
 import sys
 import tempfile
 import unittest
@@ -59,7 +61,7 @@ class UnitTests(unittest.TestCase):
         bit = signal(data_type="B", display_type="", bit=9)
         self.assertEqual(decode_environment_value(bit, 0, b"\x00\x02"), "1")
 
-    def test_html_export_contains_escaped_sections_and_environment(self):
+    def test_html_export_contains_safe_compact_environment_data(self):
         definition = EventDefinition(
             process_id=1,
             event_id=2,
@@ -151,10 +153,24 @@ class UnitTests(unittest.TestCase):
 
         self.assertIn('<section id="event-list">', content)
         self.assertIn('<section id="environment-data">', content)
-        self.assertIn("Brake &lt;fault&gt; &amp; test", content)
-        self.assertIn("XI&lt;1&gt;", content)
-        self.assertIn("Check &lt;relay&gt; &amp; reset", content)
-        self.assertIn('class="changed"', content)
+        self.assertIn('id="environment-page-info"', content)
+        payload_match = re.search(
+            r'<script id="report-data" type="application/json">(.*?)</script>',
+            content,
+            re.DOTALL,
+        )
+        self.assertIsNotNone(payload_match)
+        payload = json.loads(payload_match.group(1))
+        strings = payload["s"]
+        self.assertIn("Brake <fault> & test", strings)
+        self.assertIn("XI<1>", strings)
+        self.assertIn("REPAIR:\nCheck <relay> & reset", strings)
+        self.assertNotIn("Brake <fault> & test", content)
+        compact_environment = payload["g"][0][2][0]
+        self.assertEqual(strings[compact_environment[0]], "XI<1>")
+        self.assertEqual([strings[index] for index in compact_environment[3]], ["4", "5"])
+        self.assertEqual(compact_environment[4], [1])
+        self.assertLess(len(content.encode("utf-8")), 25_000)
 
 
 class SuppliedSampleIntegrationTests(unittest.TestCase):
